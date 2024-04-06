@@ -54,17 +54,34 @@ const individual = (tabla, id) => {
 
 }
 
-const add = (tabla, data) => {
-	const sql = 'INSERT INTO animales (id, especie, estado) VALUES (3, "chanchito", "feliz")';
-
-	conexion.query(sql);
+const add = (tabla, body) => {
+	const sql = 'INSERT INTO '+tabla+' (id, especie, estado) VALUES ('+body.id+', "'+body.especie+'", "'+body.estado+'")';
+	
+	return new Promise((resolve, reject) => {
+		conexion.query(sql, (error, result) => {
+			return (error) ? reject(error) : resolve(result);
+		});
+	})
 }
 
 const del = (tabla, body) => {
 	const sql = 'DELETE FROM ' + tabla + ' WHERE id = ' + body.id;
 
 	return new Promise((resolve, reject) => {
+		conexion.query(sql, (error, result) => {
+
 		return error ? reject(error) : resolve(result);
+		})
+	})
+}
+
+const update = (tabla, body) => {
+	const sql = 'UPDATE '+tabla+' SET especie="'+body.especie+'", estado="'+body.estado+'" WHERE id='+body.id;
+
+	return new Promise((resolve, reject) => {
+		conexion.query(sql, (error, result) => {
+			return error ? reject(error) : resolve(result);
+		})
 	})
 }
 
@@ -73,4 +90,5 @@ module.exports = {
 	individual,
 	add,
 	del,
+	update,
 }

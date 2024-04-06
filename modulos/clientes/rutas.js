@@ -7,7 +7,9 @@ const router = express.Router();
 
 router.get('/', all);
 router.get('/:id', individual);
-router.put('/', del);
+router.delete('/', del);
+router.put('/', add);
+router.post('/', update);
 
 async function all(req, res) {
 	try {
@@ -36,6 +38,28 @@ async function del(req, res) {
 		respuesta.success(req, res, 'Item eliminado correctamente', 200);
 	} catch(err) {
 		respuesta.error(req, res, err, 500);
+	}
+}
+
+async function add(req, res) {
+	try {
+		const items = await controlador.add(req.body);
+		respuesta.success(req, res, 'Item insertado correctamente', 200);
+	}
+	catch(e) {
+		respuesta.error(req, res, e, 500);
+	}
+}
+
+async function update(req, res) {
+	try {
+		const items = await controlador.update(req.body)
+		
+		respuesta.success(req, res, 'Item actualizado correctamente', 200)
+	}
+	catch(e) {
+		console.log(e)
+		respuesta.error(req, res, e, 500)
 	}
 }
 

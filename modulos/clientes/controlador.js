@@ -6,8 +6,8 @@ const all = () => {
 	return db.all(TABLA);
 }
 
-const add = (data) => {
-	return db.add(TABLA, data);
+const add = (body) => {
+	return db.add(TABLA, body);
 }
 
 const individual = (id) => {
@@ -18,9 +18,14 @@ const del = (body) => {
 	return db.del(TABLA, body);
 }
 
+const update = (body) => {
+	return db.update(TABLA, body)
+}
+
 module.exports = {
 	all,
 	individual,
 	add,
 	del,
+	update,
 }

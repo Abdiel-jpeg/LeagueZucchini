@@ -9,6 +9,8 @@ const app = express();
 
 //Midleware
 app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 //Establecemos un puerto para el servidor utilizando el objeto creado por
 //la clase express.
