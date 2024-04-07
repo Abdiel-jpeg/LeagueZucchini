@@ -45,7 +45,7 @@ const all = (tabla) => {
 }
 
 const individual = (tabla, id) => {
-	const sql = 'SELECT * FROM ' + tabla + ' WHERE id = ' + id;
+	const sql = 'SELECT * FROM ' + tabla + ' WHERE idTask = ' + id;
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
 			return error ? reject(error) : resolve(result);
@@ -55,7 +55,7 @@ const individual = (tabla, id) => {
 }
 
 const add = (tabla, body) => {
-	const sql = 'INSERT INTO '+tabla+' (id, especie, estado) VALUES ('+body.id+', "'+body.especie+'", "'+body.estado+'")';
+	const sql = 'INSERT INTO '+tabla+' (complecion, titulo, idPrioridad, fecha) VALUES ('+body.complecion+', "'+body.titulo+'", '+body.idPrioridad+', '+body.fecha+')';
 	
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -65,7 +65,7 @@ const add = (tabla, body) => {
 }
 
 const del = (tabla, body) => {
-	const sql = 'DELETE FROM ' + tabla + ' WHERE id = ' + body.id;
+	const sql = 'DELETE FROM ' + tabla + ' WHERE idTask = ' + body.idTask;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -76,7 +76,7 @@ const del = (tabla, body) => {
 }
 
 const update = (tabla, body) => {
-	const sql = 'UPDATE '+tabla+' SET especie="'+body.especie+'", estado="'+body.estado+'" WHERE id='+body.id;
+	const sql = 'UPDATE '+tabla+' SET complecion='+body.complecion+', titulo="'+body.titulo+'", idPrioridad='+body.idPrioridad+', fecha='+body.fecha+' WHERE idTask='+body.idTask;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {

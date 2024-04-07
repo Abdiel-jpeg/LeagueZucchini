@@ -3,6 +3,7 @@ const express = require("express");
 const config = require('./config');
 const clientes = require('../modulos/clientes/rutas');
 const morgan = require('morgan');
+const cors = require('cors');
 
 //Se instancia un objeto de la clase express, recien importada
 const app = express();
@@ -11,6 +12,9 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cors({
+	origin: '*'
+}))
 
 //Establecemos un puerto para el servidor utilizando el objeto creado por
 //la clase express.

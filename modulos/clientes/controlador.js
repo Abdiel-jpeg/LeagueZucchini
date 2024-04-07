@@ -1,6 +1,6 @@
 const db  = require('../../src/DB/mysql.js');
 
-const TABLA = 'animales';
+const TABLA = 'tasks';
 
 const all = () => {
 	return db.all(TABLA);
