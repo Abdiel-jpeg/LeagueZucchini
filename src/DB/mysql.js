@@ -56,7 +56,7 @@ const individual = (tabla, id) => {
 
 const add = (tabla, body) => {
 	const sql = 'INSERT INTO '+tabla+' (complecion, titulo, idPrioridad, fecha) VALUES ('+body.complecion+', "'+body.titulo+'", '+body.idPrioridad+', '+body.fecha+')';
-	
+
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
 			return (error) ? reject(error) : resolve(result);

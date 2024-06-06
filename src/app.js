@@ -2,6 +2,7 @@
 const express = require("express");
 const config = require('./config');
 const clientes = require('../modulos/clientes/rutas');
+const cisco = require('../modulos/cisco/rutas');
 const morgan = require('morgan');
 const cors = require('cors');
 
@@ -22,5 +23,6 @@ app.set('port', config.app.port);
 
 //Aqui se estableceran las rutas de la pagina web.
 app.use('/api/clientes', clientes);
+app.use('/cisco', cisco);
 
 module.exports = app;
