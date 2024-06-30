@@ -34,6 +34,98 @@ const conMysql = () => {
 
 conMysql();
 
+//--------------- CONTROLADOR REGION ---------------
+
+const region = require('./regionsql');
+
+const allRegion = () => {
+	return region.allRegion(conexion);
+}
+
+
+//--------------- CONTROLADOR CIUDAD --------------
+
+const ciudad = require('./ciudadsql');
+
+const allCiudad = () => {
+	return ciudad.allCiudad(conexion);
+}
+
+//-------------- CONTROLADOR INSTITUCION ----------
+
+const institucion = require('./institucionsql');
+
+const allInstitucion = () => {
+	return institucion.allInstitucion(conexion);
+}
+
+//------ CONTROLADOR TELEFONOS INSTITUCION -------
+
+const telefonosInstitucion = require('./telefonosInstitucionsql');
+
+const allTelefonosInstitucion = () => {
+	return telefonosInstitucion.allTelefonosInstitucion(conexion);
+}
+
+//-------------- CONTROLADOR EQUIPO -------------
+
+const equipo = require('./equiposql');
+
+const allEquipo = () => {
+	return equipo.allEquipo(conexion);
+}
+
+//-------------- CONTROLADOR PARTICIPANTE --------
+
+const participante = require('./participantesql');
+
+const allParticipante = () => {
+	return participante.allParticipante(conexion);
+}
+
+//---- CONTROLADOR TELEFONOS PARTICIPANTES ----
+
+const telefonosParticipante = require('./telefonosParticipantesql');
+
+const allTelefonosParticipante = () => {
+	return telefonosParticipante.allTelefonosParticipante(conexion);
+}
+
+//-------------- CONTROLADOR TORNEO -------------
+
+const torneo = require('./torneosql');
+
+const allTorneo = () => {
+	return torneo.allTorneo(conexion);
+}
+
+//------------- CONTROLADOR EVENTO --------------
+
+const evento = require('./eventosql');
+
+const allEvento = () => {
+	return evento.allEvento(conexion);
+}
+
+//------ CONTROLADOR PARTICIPANTES TORNEO -------
+
+const participantesTorneo = require('./participantesTorneosql');
+
+const allParticipantesTorneo = () => {
+	return participantesTorneo.allParticipantesTorneo(conexion);
+}
+
+//--------- CONTROLADOR TABLA PUNTAJE ----------
+
+const tablaPuntaje = require('./tablaPuntajesql.js');
+
+const allTablaPuntaje = () => {
+	return tablaPuntaje.allTablaPuntaje(conexion);
+}
+
+
+
+/*
 const all = (tabla) => {
 	const sql = 'SELECT * FROM ' + tabla;
 
@@ -91,4 +183,42 @@ module.exports = {
 	add,
 	del,
 	update,
+}
+*/
+
+//------------- EXPORTACION MODULOS -------------------
+module.exports = {
+	region: {
+		allRegion,
+	},
+	ciudad: {
+		allCiudad,
+	},
+	institucion: {
+		allInstitucion,
+	},
+	telefonosInstitucion: {
+		allTelefonosInstitucion,
+	},
+	equipo: {
+		allEquipo,
+	},
+	participante: {
+		allParticipante,
+	},
+	telefonosParticipante: {
+		allTelefonosParticipante,
+	},
+	torneo: {
+		allTorneo,
+	},
+	evento: {
+		allEvento,
+	},
+	participantesTorneo: {
+		allParticipantesTorneo,
+	},
+	tablaPuntaje: {
+		allTablaPuntaje,
+	}
 }
