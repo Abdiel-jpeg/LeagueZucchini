@@ -1,0 +1,42 @@
+body {
+		background-color: #f0f0f0; /* Fondo formal y elegante */
+		margin: 0;
+		padding: 0;
+		font-family: 'Calibri', sans-serif;
+		color: #333;
+		text-align: center;
+}
+
+.title {
+		text-align: center;
+		color: #333;
+		margin-top: 20px;
+		font-size: 2.5em;
+}
+
+table {
+		width: 80%;
+		margin: 20px auto;
+		border-radius: 10px; /* Marcos redondos */
+		overflow: hidden; /* Evita que los bordes redondeados corten el contenido */
+		box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Sombra suave para un efecto moderno */
+}
+
+th, td {
+		padding: 15px;
+		text-align: center;
+		border-bottom: 1px solid #ddd; /* Borde inferior ligero */
+}
+
+th {
+		background-color: #f2f2f2; /* Fondo de encabezado */
+		color: #555;
+}
+
+tr:nth-child(even) {
+		background-color: #f9f9f9; /* Fondo alternado para filas */
+}
+
+tr:hover {
+		background-color: #f1f1f1; /* Color de fondo al pasar el cursor */
+}

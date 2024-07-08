@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partidos - UEFA UTCJ LEAGUE</title>
+    <link rel="stylesheet" href="/css/partidos.css">
+</head>
+<body>
+    <h1>Partidos</h1>
+
+    <div class="start-date">El torneo comienza el 10 de septiembre de 2024</div>
+
+    <div class="container">
+        <label for="jornada">Jornada:</label>
+        <select id="jornada" onchange="updateJornada()">
+            <option value="" selected disabled>Selecciona</option>
+            <option value="1">Jornada 1</option>
+            <option value="2">Jornada 2</option>
+            <option value="3">Jornada 3</option>
+            <option value="4">Jornada 4</option>
+            <option value="5">Jornada 5</option>
+            <option value="6">Jornada 6</option>
+            <option value="7">Jornada 7</option>
+            <option value="8">Jornada 8</option>
+            <option value="9">Jornada 9</option>
+            <option value="10">Jornada 10</option>
+            <option value="cuartos">Cuartos de Final</option>
+            <option value="semifinales">Semifinales</option>
+            <option value="final">Final</option>
+        </select>
+        <div class="selected-jornada" id="selectedJornada">Selecciona una jornada</div>
+        <div class="schedule" id="schedule">
+            <!-- Los horarios de los partidos se mostrarán aquí -->
+        </div>
+    </div>
+
+    <script>
+        // Aquí va el script JavaScript como antes
+    </script>
+</body>
+</html>
+
+    <script>
+        const schedules = {
+    1: { date: "12 de septiembre de 2024", matches: [
+        { time: "08:00", match: "Mecatrónica vs Procesos Industriales" },
+        { time: "09:00", match: "Mantenimiento Industrial vs Terapia Física" },
+        { time: "10:00", match: "Protección Civil vs Energías Renovables" },
+        { time: "11:00", match: "Logística Internacional vs Negocios y Mercadotecnia" },
+        { time: "12:00", match: "Tecnologías de la Información vs Contaduría" }
+    ]},
+    2: { date: "19 de septiembre de 2024", matches: [
+        { time: "08:00", match: "Negocios y Mercadotecnia vs Mecatrónica" },
+        { time: "09:00", match: "Contaduría vs Procesos Industriales" },
+        { time: "10:00", match: "Energías Renovables vs Mantenimiento Industrial" },
+        { time: "11:00", match: "Terapia Física vs Protección Civil" },
+        { time: "12:00", match: "Tecnologías de la Información vs Logística Internacional" }
+    ]},
+    3: { date: "26 de septiembre de 2024", matches: [
+        { time: "08:00", match: "Mecatrónica vs Energías Renovables" },
+        { time: "09:00", match: "Logística Internacional vs Procesos Industriales" },
+        { time: "10:00", match: "Terapia Física vs Negocios y Mercadotecnia" },
+        { time: "11:00", match: "Protección Civil vs Tecnologías de la Información" },
+        { time: "12:00", match: "Contaduría vs Mantenimiento Industrial" }
+    ]},
+    4: { date: "3 de octubre de 2024", matches: [
+        { time: "08:00", match: "Procesos Industriales vs Protección Civil" },
+        { time: "09:00", match: "Mantenimiento Industrial vs Logística Internacional" },
+        { time: "10:00", match: "Negocios y Mercadotecnia vs Energías Renovables" },
+        { time: "11:00", match: "Contaduría vs Terapia Física" },
+        { time: "12:00", match: "Mecatrónica vs Tecnologías de la Información" }
+    ]},
+    5: { date: "10 de octubre de 2024", matches: [
+        { time: "08:00", match: "Tecnologías de la Información vs Energías Renovables" },
+        { time: "09:00", match: "Logística Internacional vs Contaduría" },
+        { time: "10:00", match: "Terapia Física vs Procesos Industriales" },
+        { time: "11:00", match: "Protección Civil vs Negocios" },
+        { time: "12:00", match: "Mecatrónica vs Mantenimiento Industrial" }
+    ]},
+    6: { date: "17 de octubre de 2024", matches: [
+        { time: "08:00", match: "Procesos Industriales vs Negocios y Mercadotecnia" },
+        { time: "09:00", match: "Energías Renovables vs Logística Internacional" },
+        { time: "10:00", match: "Contaduría vs Protección Civil" },
+        { time: "11:00", match: "Mantenimiento Industrial vs Tecnologías de la Información" },
+        { time: "12:00", match: "Terapia Física vs Mecatrónica" }
+    ]},
+    7: { date: "24 de octubre de 2024", matches: [
+        { time: "08:00", match: "Mecatrónica vs Logística Internacional" },
+        { time: "09:00", match: "Procesos Industriales vs Contaduría" },
+        { time: "10:00", match: "Energías Renovables vs Terapia Física" },
+        { time: "11:00", match: "Negocios y Mercadotecnia vs Protección Civil" },
+        { time: "12:00", match: "Tecnologías de la Información vs Mantenimiento Industrial" }
+    ]},
+    8: { date: "31 de octubre de 2024", matches: [
+        { time: "08:00", match: "Mecatrónica vs Energías Renovables" },
+        { time: "09:00", match: "Logística Internacional vs Procesos Industriales" },
+        { time: "10:00", match: "Terapia Física vs Negocios y Mercadotecnia" },
+        { time: "11:00", match: "Protección Civil vs Tecnologías de la Información" },
+        { time: "12:00", match: "Contaduría vs Mantenimiento Industrial" }
+    ]},
+    9: { date: "7 de noviembre de 2024", matches: [
+        { time: "08:00", match: "Procesos Industriales vs Protección Civil" },
+        { time: "09:00", match: "Mantenimiento Industrial vs Logística Internacional" },
+        { time: "10:00", match: "Negocios y Mercadotecnia vs Energías Renovables" },
+        { time: "11:00", match: "Contaduría vs Terapia Física" },
+        { time: "12:00", match: "Mecatrónica vs Tecnologías de la Información" }
+    ]},
+    10: { date: "14 de noviembre de 2024", matches: [
+        { time: "08:00", match: "Tecnologías de la Información vs Energías Renovables" },
+        { time: "09:00", match: "Logística Internacional vs Contaduría" },
+        { time: "10:00", match: "Terapia Física vs Procesos Industriales" },
+        { time: "11:00", match: "Protección Civil vs Negocios y Mercadotecnia" },
+        { time: "12:00", match: "Mecatrónica vs Mantenimiento Industrial" }
+    ]},
+    cuartos: { date: "18 de noviembre de 2024", matches: [
+        { time: "08:00", match: "Equipo 1 vs Equipo 8" },
+        { time: "09:00", match: "Equipo 2 vs Equipo 7" },
+        { time: "10:00", match: "Equipo 3 vs Equipo 6" },
+        { time: "11:00", match: "Equipo 4 vs Equipo 5" }
+    ]},
+    semifinales: { date: "22 de noviembre de 2024", matches: [
+        { time: "08:00", match: "Ganador 1 vs Ganador 2" },
+        { time: "10:00", match: "Ganador 3 vs Ganador 4" }
+    ]},
+    final: { date: "28 de noviembre de 2024", matches: [
+        { time: "09:00", match: "Final" }
+    ]}
+};
+
+        function updateJornada() {
+            var jornadaSelect = document.getElementById('jornada');
+            var selectedJornada = document.getElementById('selectedJornada');
+            var scheduleDiv = document.getElementById('schedule');
+
+            var jornadaValue = jornadaSelect.value;
+            if (jornadaValue === "") {
+                selectedJornada.textContent = 'Selecciona una jornada';
+                scheduleDiv.innerHTML = '';
+            } else {
+                selectedJornada.textContent = 'Estás en la jornada ' + jornadaValue;
+                displaySchedule(jornadaValue);
+            }
+        }
+
+        function displaySchedule(jornada) {
+            var scheduleDiv = document.getElementById('schedule');
+            var jornadaInfo = schedules[jornada];
+            var date = jornadaInfo.date;
+            var matches = jornadaInfo.matches;
+
+            var html = '<table>';
+            html += '<tr><th colspan="2">Fecha de la jornada: ' + date + '</th></tr>';
+            html += '<tr><th>Hora</th><th>Partido</th></tr>';
+
+            matches.forEach(function(match) {
+                html += '<tr><td>' + match.time + '</td><td>' + match.match + '</td></tr>';
+            });
+
+            html += '</table>';
+            scheduleDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+
+body {
+		background-image: url('/pictures/darkbg.jpeg');
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-attachment: fixed;
+		margin: 0;
+		padding: 0;
+		font-family: 'Calibri', sans-serif;
+		color: #333; /* Color de texto oscuro */
+		text-align: center;
+}
+
+h1 {
+		font-size: 2em;
+		margin-top: 20px;
+		text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+		padding: 15px 30px;
+		border-radius: 30px;
+		background-color: #fff; /* Fondo blanco */
+		color: #333; /* Texto oscuro */
+		display: inline-block;
+}
+
+.container {
+		margin-top: 20px;
+		text-align: center;
+		background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente blanco */
+		padding: 20px;
+		border-radius: 10px;
+		border: 2px solid #333; /* Borde oscuro */
+		color: #333; /* Texto oscuro */
+		width: 60%; /* Ancho reducido */
+		margin-left: auto;
+		margin-right: auto;
+		box-sizing: border-box; /* Incluir el padding y border en el ancho total */
+}
+
+.container label {
+		display: block;
+		margin-bottom: 5px;
+		font-size: 1em;
+}
+
+.container select {
+		width: 100px; /* Ancho adecuado del select */
+		padding: 8px 10px;
+		border-radius: 20px;
+		border: 1px solid #ccc;
+		font-size: 1em; /* Tamaño de fuente moderno */
+		outline: none;
+		box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+		transition: all 0.3s ease-in-out;
+		appearance: none; /* Eliminamos la apariencia predeterminada del select */
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		background: #fff; /* Fondo blanco */
+		color: #333; /* Texto oscuro */
+}
+
+.container select:hover {
+		border-color: #888;
+		box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.container select:focus {
+		border-color: #555;
+		box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.selected-jornada {
+		margin-top: 10px;
+		font-size: 1em; /* Tamaño de fuente moderno */
+		font-weight: bold;
+		color: #333; /* Texto oscuro */
+}
+
+.schedule {
+		margin-top: 20px;
+		text-align: left;
+}
+
+.schedule table {
+		width: 100%;
+		border-collapse: collapse;
+}
+
+.schedule th, .schedule td {
+		border: 1px solid #333; /* Borde oscuro */
+		padding: 8px;
+		text-align: center;
+}
+
+.schedule th {
+		background-color: rgba(255, 255, 255, 0.3); /* Fondo semi-transparente blanco */
+}
+
+.start-date {
+		font-size: 1em;
+		font-weight: bold;
+		margin-top: 20px;
+		color: #333; /* Texto oscuro */
+}

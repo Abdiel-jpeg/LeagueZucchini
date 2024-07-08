@@ -2,6 +2,7 @@
 const express = require("express");
 const morgan = require('morgan');
 const cors = require('cors');
+const path = require('path');
 
 //Importacion de la configuracion de la BBDD
 const config = require('./config');
@@ -20,6 +21,10 @@ const evento = require('../modulos/integradora/evento');
 const tablaPuntaje = require('../modulos/integradora/tablaPuntaje');
 //const clientes = require('../modulos/clientes/rutas');
 //const cisco = require('../modulos/cisco/rutas');
+
+//------- Importacion de las respuestas de red cliente/servidor --------
+
+const leagueZucchiniRouter = require('../public/html/leagueZucchiniRouter');
 
 //La case express nos permite utilizar métodos de enrutamiento, de respuesta
 //y solicitud de métodos de HTTP
@@ -56,6 +61,8 @@ app.use(cors({
 	origin: '*'
 }))
 
+app.use(express.static(path.join(__dirname, '../public')));
+
 //Nota, cuando se está utlizando middleware propietario de express, como
 //aquellos que deben de llamar una función de la misma clase como
 //express.json o exrpess.urlencoded, estos middlewares ya tienen integrados
@@ -74,6 +81,8 @@ app.set('port', config.app.port);
 //Aqui se estableceran las rutas de la pagina web.
 //app.use('/api/clientes', clientes);
 //app.use('/cisco', cisco);
+
+//------------------------ Seccion API ---------------------------
 app.use('/api/region/', region);
 app.use('/api/ciudad/', ciudad);
 app.use('/api/institucion/', institucion);
@@ -85,6 +94,10 @@ app.use('/api/torneo', torneo);
 app.use('/api/torneo/participantes', participantesTorneo);
 app.use('/api/evento', evento);
 app.use('/api/tablaPuntaje', tablaPuntaje);
+
+//---------------- Seccion cliente/servidor ------------------
+console.log(leagueZucchiniRouter);
+app.use('/', leagueZucchiniRouter);
 
 //Así se exporta en javasscript
 module.exports = app;
