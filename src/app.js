@@ -24,7 +24,7 @@ const tablaPuntaje = require('../modulos/integradora/tablaPuntaje');
 
 //------- Importacion de las respuestas de red cliente/servidor --------
 
-const leagueZucchiniRouter = require('../public/html/leagueZucchiniRouter');
+const leagueZucchiniRouter = require('../modulos/integradora/leagueZucchiniRouter');
 
 //La case express nos permite utilizar métodos de enrutamiento, de respuesta
 //y solicitud de métodos de HTTP
