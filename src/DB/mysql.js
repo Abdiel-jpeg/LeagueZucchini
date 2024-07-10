@@ -123,7 +123,31 @@ const allTablaPuntaje = () => {
 	return tablaPuntaje.allTablaPuntaje(conexion);
 }
 
+//------------- CONTROLADOR USUARIO ------------
 
+const usuario =  require('./usuariosql.js');
+
+const allUsuario = () => {
+	return usuario.allUsuario(conexion);
+}
+
+const loginUsuario = ({ nombreUsuario, contraseniaUsuario: contrasenia }) => {
+	return usuario.loginUsuario(conexion, nombreUsuario, contrasenia)
+}
+
+const addUsuario = ({
+	nombreUsuario,
+	contraseniaUsuario: contrasenia,
+	correoUsuario: correo,
+	nTelefonoUsuario: nTelefono,
+	fotoPerfiUsuario: fotoPerfil
+}) => {
+	return usuario.addUsuario(conexion, nombreUsuario, contrasenia, correo, nTelefono, fotoPerfil);
+}
+
+const delUsuario = ({ idUsuario }) => {
+	return usuario.delUsuario(conexion, idUsuario);
+}
 
 /*
 const all = (tabla) => {
@@ -220,5 +244,11 @@ module.exports = {
 	},
 	tablaPuntaje: {
 		allTablaPuntaje,
+	},
+	usuario: {
+		allUsuario,
+		loginUsuario,
+		addUsuario,
+		delUsuario
 	}
 }

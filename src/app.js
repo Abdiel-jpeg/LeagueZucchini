@@ -19,6 +19,7 @@ const torneo = require('../modulos/integradora/torneo');
 const participantesTorneo = require('../modulos/integradora/participantesTorneo');
 const evento = require('../modulos/integradora/evento');
 const tablaPuntaje = require('../modulos/integradora/tablaPuntaje');
+const usuario = require('../modulos/integradora/usuario');
 //const clientes = require('../modulos/clientes/rutas');
 //const cisco = require('../modulos/cisco/rutas');
 
@@ -58,9 +59,22 @@ app.use(express.urlencoded({extended: true}));
 //pueda acceder a nuestra información. De hay que el argumento de cors sea
 //todos los origenes
 app.use(cors({
-	origin: '*'
-}))
+	origin: '*',
+	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+}));
 
+//NOTA: fue añadido el campo 'methods' para permitir todos los métodos
+//de solicitudes http en la lista
+
+//This is used when the http method has a header with Content-Type: 
+//applicatoin/json, becuase the browser will send a preflight OPTIONS
+//to check if this servrer can handle this kind of requests
+app.options('*', cors());
+
+//Express viene con una función consigo en el que permite utilizar rutas
+//dentro del mismo S.O. para que puedan ser accedidas desde el exterior
+//y por navegadores. Esta ruta es pública y se utiliza principalmente
+//para todo lo que es el frontend.
 app.use(express.static(path.join(__dirname, '../public')));
 
 //Nota, cuando se está utlizando middleware propietario de express, como
@@ -78,6 +92,12 @@ app.use(express.static(path.join(__dirname, '../public')));
 //la clase express.
 app.set('port', config.app.port);
 
+/*app.all('*', function(req, res) {
+	res.header("Access-Control-Allow-Origin", "*");
+ res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+ res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+});*/
+
 //Aqui se estableceran las rutas de la pagina web.
 //app.use('/api/clientes', clientes);
 //app.use('/cisco', cisco);
@@ -94,6 +114,7 @@ app.use('/api/torneo', torneo);
 app.use('/api/torneo/participantes', participantesTorneo);
 app.use('/api/evento', evento);
 app.use('/api/tablaPuntaje', tablaPuntaje);
+app.use('/api/usuarioTest/', usuario);
 
 //---------------- Seccion cliente/servidor ------------------
 console.log(leagueZucchiniRouter);
