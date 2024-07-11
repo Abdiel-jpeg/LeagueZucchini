@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Equipo - UEFA UTCJ LEAGUE</title>
+    <style>
+        body {
+            background-image: url('/pictures/darkbg.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: 'Calibri', sans-serif;
+            color: #333; /* Color de texto oscuro */
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-top: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            padding: 15px 30px;
+            border-radius: 30px;
+            background-color: #fff; /* Fondo blanco */
+            color: #333; /* Texto oscuro */
+            display: inline-block;
+        }
+
+        .container {
+            margin-top: 20px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente blanco */
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #333; /* Borde oscuro */
+            color: #333; /* Texto oscuro */
+            width: 60%; /* Ancho reducido */
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box; /* Incluir el padding y border en el ancho total */
+        }
+
+        .container label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1em;
+        }
+
+        .container input[type="text"], .container input[type="email"], .container input[type="tel"] {
+            width: calc(100% - 22px); /* Ancho del input restando padding y border */
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em; /* Tamaño de fuente moderno */
+            outline: none;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .container select {
+            width: calc(100% - 22px); /* Ancho del select restando padding y border */
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em; /* Tamaño de fuente moderno */
+            outline: none;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            appearance: none; /* Eliminamos la apariencia predeterminada del select */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: #fff; /* Fondo blanco */
+            color: #333; /* Texto oscuro */
+        }
+
+        .container .member-entry {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .container .member-entry input[type="text"] {
+            width: 48%; /* Ancho del input para nombre y matrícula */
+        }
+
+        .container button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333; /* Color de fondo oscuro */
+            color: #fff; /* Color de texto blanco */
+            font-size: 1em; /* Tamaño de fuente moderno */
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container button:hover {
+            background-color: #555; /* Color de fondo al pasar el ratón */
+        }
+    </style>
+</head>
+<body>
+    <h1>Registrar Equipo</h1>
+
+    <div class="container">
+        <form id="registerForm">
+            <label for="teamName">Nombre del Equipo:</label>
+            <input type="text" id="teamName" name="teamName" required>
+
+            <label for="captainPhone">Número de Teléfono del Capitán del Equipo:</label>
+            <input type="tel" id="captainPhone" name="captainPhone" required>
+
+            <label for="captainEmail">Correo del Capitán del Equipo:</label>
+            <input type="email" id="captainEmail" name="captainEmail" required>
+
+            <label for="teamMembers">Nombre y Matrícula de Integrantes (mínimo 10 personas):</label>
+            <div id="teamMembers">
+                <!-- Campos para 10 integrantes -->
+                <div class="member-entry">
+                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 1" required>
+                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 1" required>
+                </div>
+                <div class="member-entry">
+                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 2" required>
+                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 2" required>
+                </div>
+                <div class="member-entry">
+                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 3" required>
+                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 3" required>
+                </div>
+                <div class="member-entry">
+                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 4" required>
+                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 4" required>
+                </div>
+                <div class="member-entry">
+                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 5" required>
+                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 5" required>
+                </div>
+                <div class="member-entry">
+                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 6" required>
+                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 6" required>
+                </div>
+                <div class="member-entry">
+                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 7" required>
+                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 7" required>
+                </div>
+                <div class="member-entry">
+                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 8" required>
+                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 8" required>
+                </div>
+                <div class="member-entry">
+                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 9" required>
+                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 9" required>
+                </div>
+                <div class="member-entry">
+                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 10" required>
+                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 10" required>
+                </div>
+            </div>
+
+            <label for="turno">Turno:</label>
+            <select id="turno" name="turno" required>
+                <option value="matutino">Matutino</option>
+                <option value="vespertino">Vespertino</option>
+            </select>
+
+            <button type="submit">Registrar</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Equipo Registrado con éxito, Espera la confirmación del Administrador');
+            // Redireccionar a la página principal después de mostrar el mensaje
+            window.location.href = 'Inicio.html'; // Cambia 'index.html' por la ruta de tu página principal
+        });
+    </script>
+</body>
+</html>

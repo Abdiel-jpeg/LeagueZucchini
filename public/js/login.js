@@ -63,7 +63,7 @@ const loginFetch = async () => {
 		//que este contiene en forma de alert.
 		alert(response.body)
 	} else {
-		window.location.href = "/";
+		window.location.href = "/admin/";
 	}
 
 	console.log(response);
