@@ -15,8 +15,10 @@ const telefonosInstitucion = require ('../modulos/integradora/telefonosInstituci
 const equipo = require('../modulos/integradora/equipo');
 const participante = require('../modulos/integradora/participante');
 const telefonosParticipante = require('../modulos/integradora/telefonosParticipante');
-const torneo = require('../modulos/integradora/torneo');
-const participantesTorneo = require('../modulos/integradora/participantesTorneo');
+const tipoCompeticion = require('../modulos/integradora/tipoCompeticion');
+const competicion = require('../modulos/integradora/competicion');
+const competicionParticipantes = require('../modulos/integradora/competicionParticipantes');
+const competicionCombinadaParticipantes = require('../modulos/integradora/competicionCombinadaParticipantes');
 const evento = require('../modulos/integradora/evento');
 const tablaPuntaje = require('../modulos/integradora/tablaPuntaje');
 const usuario = require('../modulos/integradora/usuario');
@@ -110,8 +112,10 @@ app.use('/api/institucion/telefonos/', telefonosInstitucion);
 app.use('/api/equipo/', equipo);
 app.use('/api/participante', participante);
 app.use('/api/participante/telefonos/', telefonosParticipante);
-app.use('/api/torneo', torneo);
-app.use('/api/torneo/participantes', participantesTorneo);
+app.use('/api/competicion', competicion);
+app.use('/api/competicion/tipos', tipoCompeticion);
+app.use('/api/competicion/participantes', competicionParticipantes);
+app.use('/api/competicion/combinada/participantes', competicionCombinadaParticipantes)
 app.use('/api/evento', evento);
 app.use('/api/tablaPuntaje', tablaPuntaje);
 app.use('/api/usuarioTest/', usuario);

@@ -1,5 +1,5 @@
-const allTorneo = (conexion) => {
-	const sql = `SELECT * FROM torneo`;
+const allTipoCompeticion = (conexion) => {
+	const sql = `SELECT * FROM tipoCompeticion;`;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -9,5 +9,5 @@ const allTorneo = (conexion) => {
 }
 
 module.exports = {
-	allTorneo
+	allTipoCompeticion
 }

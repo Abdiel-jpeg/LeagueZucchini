@@ -42,6 +42,22 @@ const allRegion = () => {
 	return region.allRegion(conexion);
 }
 
+const individualRegion = ( { id } ) => {
+	return region.individualRegion(conexion, id);
+}
+
+const addRegion = ( { nombreRegion } ) => {
+	return region.addRegion(conexion, nombreRegion);
+}
+
+const delRegion = ( { idRegion: id } ) => {
+	return region.delRegion(conexion, id);
+}
+
+const updateRegion = ( { idRegion: id, nombreRegion } ) => {
+	return region.updateRegion(conexion, id, nombreRegion);
+}
+
 
 //--------------- CONTROLADOR CIUDAD --------------
 
@@ -51,12 +67,65 @@ const allCiudad = () => {
 	return ciudad.allCiudad(conexion);
 }
 
+const individualCiudad = ( { id } ) => {
+	return ciudad.individualCiudad(conexion, id);
+}
+
+const addCiudad = ( { nombreCiudad, idRegion } ) => {
+	return ciudad.addCiudad(conexion, nombreCiudad, idRegion);
+}
+
+const delCiudad = ( { idCiudad: id } ) => {
+	return ciudad.delCiudad(conexion, id);
+}
+
+const updateCiudad = ( { idCiudad: id, nombreCiudad, idRegion } ) => {
+	return ciudad.updateCiudad(conexion, id, nombreCiudad, idRegion);
+}
+
 //-------------- CONTROLADOR INSTITUCION ----------
 
 const institucion = require('./institucionsql');
 
 const allInstitucion = () => {
 	return institucion.allInstitucion(conexion);
+}
+
+const individualInstitucion = ( { id } ) => {
+	return institucion.individualInstitucion(conexion, id);
+}
+
+const addInstitucion = ( {
+	nombreInstitucion,
+	direccionInstitucion,
+	nInstitucionPais,
+	cct,
+	idNivelEscolaridad,
+	idTurno,
+	idSostenimiento,
+	paginaWebInstitucion,
+	idCiudad
+} ) => {
+	return institucion.addInstitucion(conexion, nombreInstitucion, direccionInstitucion, nInstitucionPais, cct, idNivelEscolaridad, idTurno, idSostenimiento, paginaWebInstitucion, idCiudad);
+}
+
+const delInstitucion = ( { idInstitucion: id } ) => {
+	return institucion.delInstitucion(conexion, id);
+}
+
+const updateInstitucion = ( {
+	idInstitucion : id,
+	nombreInstitucion,
+	direccionInstitucion,
+	nInstitucionPais,
+	cct,
+	idNivelEscolaridad,
+	idTurno,
+	idSostenimiento,
+	paginaWebInstitucion,
+	idCiudad
+} ) => {
+	return institucion.updateInstitucion(conexion,id, nombreInstitucion, direccionInstitucion, nInstitucionPais, cct, idNivelEscolaridad, idTurno, idSostenimiento, paginaWebInstitucion, idCiudad);
 }
 
 //------ CONTROLADOR TELEFONOS INSTITUCION -------
@@ -75,12 +144,65 @@ const allEquipo = () => {
 	return equipo.allEquipo(conexion);
 }
 
+const individualEquipo = ( { id } ) => {
+	return equipo.individualEquipo(conexion, id);
+}
+
+const addEquipo = ( { grado, grupo, nombreGrupo, idInstitucion } ) => {
+	return equipo.addEquipo(conexion, grado, grupo, nombreGrupo, idInstitucion);
+}
+
+const delEquipo = ( { idEquipo: id } ) => {
+	return equipo.delEquipo(conexion, id);
+}
+
+const updateEquipo = ( { idEquipo: id, grado, grupo, nombreGrupo, idInstitucion } ) => {
+	return equipo.updateEquipo(conexion, id, grado, grupo, nombreGrupo, idInstitucion);
+}
+ 
 //-------------- CONTROLADOR PARTICIPANTE --------
 
 const participante = require('./participantesql');
 
 const allParticipante = () => {
 	return participante.allParticipante(conexion);
+}
+
+const individualParticipante = ( { id } ) => {
+	return participante.individualParticipante(conexion, id);
+}
+
+const addParticipante = ( {
+	nombreParticipante,
+	fechaNacimientoParticipante,
+	direccionParticipante,
+	nss,
+	autorizacionAdulto,
+	enfermedadesParticipante,
+	medicamentosParticipante,
+	operacionesParticipante,
+	idEquipo
+} ) => {
+	return participante.addParticipante(conexion, nombreParticipante, fechaNacimientoParticipante, direccionParticipante, nss, autorizacionAdulto, enfermedadesParticipante, medicamentosParticipante, operacionesParticipante, idEquipo);
+}
+
+const delParticipante = ( { idParticipante: id } ) => {
+	return participante.delParticipante(conexion, id);
+}
+
+const updateParticipante = ({
+	idParticipante: id,
+	nombreParticipante,
+	fechaNacimientoParticipante,
+	direccionParticipante,
+	nss,
+	autorizacionAdulto,
+	enfermedadesParticipante,
+	medicamentosParticipante,
+	operacionesParticipante,
+	idEquipo
+}) => {
+	return participante.updateParticipante(conexion, id, nombreParticipante, fechaNacimientoParticipante, direccionParticipante, nss, autorizacionAdulto, enfermedadesParticipante, medicamentosParticipante, operacionesParticipante, idEquipo);
 }
 
 //---- CONTROLADOR TELEFONOS PARTICIPANTES ----
@@ -91,12 +213,20 @@ const allTelefonosParticipante = () => {
 	return telefonosParticipante.allTelefonosParticipante(conexion);
 }
 
-//-------------- CONTROLADOR TORNEO -------------
+//---------CONTROLADOR TIPO COMPETICION-----------
 
-const torneo = require('./torneosql');
+const tipoCompeticion = require('./tipoCompeticionsql');
 
-const allTorneo = () => {
-	return torneo.allTorneo(conexion);
+const allTipoCompeticion = () => {
+	return tipoCompeticion.allTipoCompeticion(conexion);
+}
+
+//----------- CONTROLADOR COMPETICION -------------
+
+const competicion = require('./competicionsql');
+
+const allCompeticion = () => {
+	return competicion.allCompeticion(conexion);
 }
 
 //------------- CONTROLADOR EVENTO --------------
@@ -107,12 +237,20 @@ const allEvento = () => {
 	return evento.allEvento(conexion);
 }
 
-//------ CONTROLADOR PARTICIPANTES TORNEO -------
+//--- CONTROLADOR COMPETICION PARTICIPANTES ---
 
-const participantesTorneo = require('./participantesTorneosql');
+const competicionParticipantes = require('./competicionParticipantessql');
 
-const allParticipantesTorneo = () => {
-	return participantesTorneo.allParticipantesTorneo(conexion);
+const allCompeticionParticipantes = () => {
+	return competicionParticipantes.allCompeticionParticipantes(conexion);
+}
+
+// CONTROLADOR COMPETICION COMBINADA PARTICIPANTES
+
+const competicionCombinadaParticipantes = require('./competicionCombinadaParticipantessql');
+
+const allCompeticionCombinadaParticipantes = () => {
+	return competicionCombinadaParticipantes.allCompeticionCombinadaParticipantes(conexion);
 }
 
 //--------- CONTROLADOR TABLA PUNTAJE ----------
@@ -214,33 +352,59 @@ module.exports = {
 module.exports = {
 	region: {
 		allRegion,
+		individualRegion,
+		addRegion,
+		delRegion,
+		updateRegion
 	},
 	ciudad: {
 		allCiudad,
+		individualCiudad,
+		addCiudad,
+		delCiudad,
+		updateCiudad
 	},
 	institucion: {
 		allInstitucion,
+		individualInstitucion,
+		addInstitucion,
+		delInstitucion,
+		updateInstitucion
 	},
 	telefonosInstitucion: {
 		allTelefonosInstitucion,
 	},
 	equipo: {
 		allEquipo,
+		individualEquipo,
+		addEquipo,
+		delEquipo,
+		updateEquipo
 	},
 	participante: {
 		allParticipante,
+		individualParticipante,
+		addParticipante,
+		delParticipante,
+		updateParticipante
 	},
 	telefonosParticipante: {
 		allTelefonosParticipante,
 	},
-	torneo: {
-		allTorneo,
+	tipoCompeticion: {
+		allTipoCompeticion,
+	},
+	competicion: {
+		allCompeticion,
 	},
 	evento: {
 		allEvento,
 	},
-	participantesTorneo: {
-		allParticipantesTorneo,
+	competicionParticipantes: {
+		allCompeticionParticipantes,
+	},
+	competicionCombinadaParticipantes: {
+		allCompeticionCombinadaParticipantes,
 	},
 	tablaPuntaje: {
 		allTablaPuntaje,
