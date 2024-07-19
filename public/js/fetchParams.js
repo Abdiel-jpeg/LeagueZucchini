@@ -7,9 +7,9 @@ const getParams = {
 	}
 }
 
-const getPostParams = (query) => {
-	const postParams = {
-		method: 'POST',
+const getQueryParams = (type, query) => {
+	const queryParams = {
+		method: type,
 		mode: 'cors',
 		cache: 'no-cache',
 		headers: {
@@ -22,11 +22,11 @@ const getPostParams = (query) => {
 		body: JSON.stringify(query)
 	}
 
-	return postParams;
+	return queryParams;
 }
 
 
 export { 
 	getParams,
-	getPostParams,
+	getQueryParams,
 }

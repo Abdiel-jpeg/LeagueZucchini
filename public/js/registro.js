@@ -1,38 +1,37 @@
-import { getParams } from "/js/fetchParams.js";
+import { getParams, getQueryParams } from "/js/fetchParams.js";
+import insertTablaRegion from "/js/registro/registroRegion.js";
 
-let formRegistro;
+let moduloRegion;
 
-const fetchRegion = async () => {
-	const response = await fetch('/api/region', getParams);
-	const json = await response.json();
-	return json;
-}
+const changeRegistro = (target) => {
+	switch(target) {
+		case "Region": insertTablaRegion();
+			break;
 
-const insertRow = (item) => {
-	let row = document.createElement('div');
-	row.appendChild(document.createTextNode(item.nombreRegion));
-
-	formRegistro.appendChild(row);
-}
-
-const addNewRegistro = async () => {
-	const registro = document.getElementById("nombreNuevoRegistro");
-
-	console.log(registro.value);
+		case "Ciudad": insertTablaCiudad()
+			
+			break;
+	}
 }
 
 window.addEventListener("load", () => {
-	document.getElementById("nombreDelRegistro").appendChild(document.createTextNode("Registrar nueva region"));
-	formRegistro = document.getElementById("formRegistro");
+	moduloRegion = document.getElementsByClassName("moduloRegion")[0];
 
-	fetchRegion().then(({ body }) => {
-		for(let i = 0; i < body.length; i++) {
-			insertRow(body[i]);
-		}
-	});
-});
+	changeRegistro(document.getElementById('registrar').value);
+})
 
-document.getElementById("nuevoRegistro").addEventListener("click", (e) => {
+document.getElementById("cerrar").addEventListener("click", (e) => {
 	e.preventDefault();
-	addNewRegistro();
+	document.getElementsByClassName("popup")[0].style.display = "none";
+	inputNombreRegion.innerHTML = '';
+})
+
+document.getElementById('registrar').addEventListener("change", (e) => {
+	e.preventDefault();
+	console.log(e.target.value);
+	moduloRegion.innerHTML = "";
+	
+	//console.log(registrarRegion.children[1]);
+
+	changeRegistro(e.target.value);
 })

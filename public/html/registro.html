@@ -12,85 +12,30 @@
 
     <div class="container">
         <div>
-            <label for"nombreNuevoRegistro" id="nombreDelRegistro"></label>
-            <input type="text" id="nombreNuevoRegistro" name="nombreNuevoRegistro" required>
-            <button type="button" id="nuevoRegistro">Registrar</button>
-        </div>
-        <form id="formRegistro">
-
-            <!--
-            <label for="teamName">Nombre del Equipo:</label>
-            <input type="text" id="teamName" name="teamName" required>
-
-            <label for="captainPhone">Número de Teléfono del Capitán del Equipo:</label>
-            <input type="tel" id="captainPhone" name="captainPhone" required>
-
-            <label for="captainEmail">Correo del Capitán del Equipo:</label>
-            <input type="email" id="captainEmail" name="captainEmail" required>
-
-            <label for="teamMembers">Nombre y Matrícula de Integrantes (mínimo 10 personas):</label>
-            <div id="teamMembers">
-                Campos para 10 integrantes
-                <div class="member-entry">
-                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 1" required>
-                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 1" required>
-                </div>
-                <div class="member-entry">
-                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 2" required>
-                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 2" required>
-                </div>
-                <div class="member-entry">
-                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 3" required>
-                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 3" required>
-                </div>
-                <div class="member-entry">
-                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 4" required>
-                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 4" required>
-                </div>
-                <div class="member-entry">
-                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 5" required>
-                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 5" required>
-                </div>
-                <div class="member-entry">
-                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 6" required>
-                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 6" required>
-                </div>
-                <div class="member-entry">
-                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 7" required>
-                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 7" required>
-                </div>
-                <div class="member-entry">
-                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 8" required>
-                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 8" required>
-                </div>
-                <div class="member-entry">
-                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 9" required>
-                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 9" required>
-                </div>
-                <div class="member-entry">
-                    <input type="text" name="memberName[]" placeholder="Nombre del Integrante 10" required>
-                    <input type="text" name="memberId[]" placeholder="Matrícula del Integrante 10" required>
-                </div>
-            </div>
-
-            <label for="turno">Turno:</label>
-            <select id="turno" name="turno" required>
-                <option value="matutino">Matutino</option>
-                <option value="vespertino">Vespertino</option>
+            <select name="registrar" id="registrar">
+                <option value="" selected disabled hidden>ELIGE</option>
+                <option value="Region">Region</option>
+                <option value="Ciudad">Ciudad</option>
+                <option value="Institucion">Institucion</option>
+                <option value="Equipo">Equipo</option>
+                <option value="Participante">Participante</option>
             </select>
+        </div>
 
-            <button type="submit">Registrar</button>
-            -->
-        </form>
+        <div class="moduloRegion">
+        </div>
+
+        <div class="moduloCiudad">
+        </div>
     </div>
 
-    <script>
-        document.getElementById('registerForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            alert('Equipo Registrado con éxito, Espera la confirmación del Administrador');
-            // Redireccionar a la página principal después de mostrar el mensaje
-            window.location.href = 'Inicio.html'; // Cambia 'index.html' por la ruta de tu página principal
-        });
-    </script>
+    <div class="popup">
+        <div class="popup-content">
+            <button type="button" id="cerrar">Cerrar</button>
+            <label for="nombre">Nombre de la región</label>
+            <input type="text" id="inputNombreRegion">
+            <button type="button" id="eliminar">Eliminar</button>
+        </div>
+    </div>
 </body>
 </html>

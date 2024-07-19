@@ -136,6 +136,27 @@ const allTelefonosInstitucion = () => {
 	return telefonosInstitucion.allTelefonosInstitucion(conexion);
 }
 
+const getTelefonosInstitucion = ( { idInstitucion } ) => {
+	return telefonosInstitucion.getTelefonosInstitucion(conexion, idInstitucion);
+}
+
+const addTelefonosInstitucion = ( { nTelefonoInstitucion: telefono, idInstitucion } ) => {
+	return telefonosInstitucion.addTelefonosInstitucion(conexion, telefono, idInstitucion);
+}
+
+const delTelefonosInstitucion = ( { nTelefonoInstitucion: telefono, idInstitucion } ) => { 
+	return telefonosInstitucion.delTelefonosInstitucion(conexion, telefono, idInstitucion);
+}
+
+const updateTelefonosInstitucion = ( {
+	nTelefonoInstitucion: telefono,
+	idInstitucion,
+	newTelefono,
+	newIdInstitucion
+} ) => {
+	return telefonosInstitucion.updateTelefonosInstitucion(conexion, telefono, idInstitucion, newTelefono, newIdInstitucion);
+}
+
 //-------------- CONTROLADOR EQUIPO -------------
 
 const equipo = require('./equiposql');
@@ -211,6 +232,27 @@ const telefonosParticipante = require('./telefonosParticipantesql');
 
 const allTelefonosParticipante = () => {
 	return telefonosParticipante.allTelefonosParticipante(conexion);
+}
+
+const getTelefonosParticipante = ( { idParticipante } ) => {
+	return telefonosParticipante.getTelefonosParticipante(conexion, idParticipante);
+}
+
+const addTelefonosParticipante = ( { nTelefonoParticipante: telefono, idParticipante } ) => {
+	return telefonosParticipante.addTelefonosParticipante(conexion, telefono, idParticipante);
+}
+
+const delTelefonosParticipante = ( { nTelefonoParticipante: telefono, idParticipante } ) => {
+	return telefonosParticipante.delTelefonosParticipante(conexion, telefono, idParticipante);
+}
+
+const updateTelefonosParticipante = ( {
+	nTelefonoParticipante: telefono,
+	idParticipante,
+	newTelefono,
+	newIdParticipante
+} ) => {
+	return telefonosParticipante.updateTelefonosParticipante(conexion, telefono, idParticipante, newTelefono, newIdParticipante);
 }
 
 //---------CONTROLADOR TIPO COMPETICION-----------
@@ -373,6 +415,10 @@ module.exports = {
 	},
 	telefonosInstitucion: {
 		allTelefonosInstitucion,
+		getTelefonosInstitucion,
+		addTelefonosInstitucion,
+		delTelefonosInstitucion,
+		updateTelefonosInstitucion
 	},
 	equipo: {
 		allEquipo,
@@ -390,6 +436,10 @@ module.exports = {
 	},
 	telefonosParticipante: {
 		allTelefonosParticipante,
+		getTelefonosParticipante,
+		addTelefonosParticipante,
+		delTelefonosParticipante,
+		updateTelefonosParticipante
 	},
 	tipoCompeticion: {
 		allTipoCompeticion,
