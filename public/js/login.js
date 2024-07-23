@@ -1,5 +1,5 @@
 
-import { getPostParams } from '/js/fetchParams.js';
+import { getQueryParams } from '/js/fetchParams.js';
 
 let username;
 let password;
@@ -54,7 +54,7 @@ const loginFetch = async () => {
 		contraseniaUsuario: password,
 	}
 
-	const JSON = await fetch('http://localhost:4000/api/usuarioTest', getPostParams(query));
+	const JSON = await fetch('http://localhost:4000/api/usuarioTest', getQueryParams('POST', query));
 
 	const response = await JSON.json();
 

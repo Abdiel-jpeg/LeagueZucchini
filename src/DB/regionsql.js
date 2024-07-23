@@ -1,5 +1,9 @@
-const allRegion = (conexion) => {
-	const sql = `SELECT * FROM region;`;
+const allRegion = (conexion, limit, offset) => {
+	let sql = `SELECT *, (SELECT COUNT(*) FROM region) AS count FROM region LIMIT ${limit} OFFSET ${offset};`;
+
+	if (limit == 0) {
+		sql = `SELECT * FROM region`;
+	}
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -8,8 +12,8 @@ const allRegion = (conexion) => {
 	});
 }
 
-const individualRegion = (conexion, id) => {
-	const sql = `SELECT * FROM region WHERE idRegion=${id};`;
+const searchRegion = (conexion, busqueda, limit, offset) => {
+	const sql = `SELECT *, (SELECT COUNT(*) FROM region WHERE nombreRegion LIKE '%${busqueda}%') AS count FROM region WHERE nombreRegion LIKE '%${busqueda}%' LIMIT ${limit} OFFSET ${offset};`
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -19,7 +23,7 @@ const individualRegion = (conexion, id) => {
 }
 
 const addRegion = (conexion, nombreRegion) => {
-	const sql = `INSERT INTO region (nombreRegion) VALUES ("${nombreRegion}");`;
+	const sql = `INSERT INTO region VALUES ("${nombreRegion}");`;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -28,8 +32,10 @@ const addRegion = (conexion, nombreRegion) => {
 	})
 }
 
-const delRegion = (conexion, id) => {
-	const sql = `DELETE FROM region WHERE idRegion=${id};`;
+const delRegion = (conexion, nombreRegion) => {
+	const sql = `DELETE FROM region WHERE nombreRegion="${nombreRegion}";`;
+
+	console.log(sql);
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -38,8 +44,8 @@ const delRegion = (conexion, id) => {
 	})
 }
 
-const updateRegion  = (conexion, id, nombreRegion) => {
-	const sql = `UPDATE region SET nombreRegion = "${nombreRegion}" WHERE idRegion = ${id};`;
+const updateRegion  = (conexion, nuevoNombreRegion, nombreRegion) => {
+	const sql = `UPDATE region SET nombreRegion = "${nuevoNombreRegion}" WHERE nombreRegion = "${nombreRegion}";`;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -50,7 +56,7 @@ const updateRegion  = (conexion, id, nombreRegion) => {
 
 module.exports = {
 	allRegion,
-	individualRegion,
+	searchRegion,
 	addRegion,
 	delRegion,
 	updateRegion

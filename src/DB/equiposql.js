@@ -1,5 +1,5 @@
-const allEquipo = (conexion) => {
-	const sql = `SELECT e.idEquipo, e.grado, e.grupo, e.nombreGrupo, e.idInstitucion, i.nombreInstitucion FROM equipo e LEFT JOIN institucion i ON e.idInstitucion = i.idInstitucion;`
+const allEquipo = (conexion, limit, offset) => {
+	const sql = `SELECT e.idEquipo, e.grado, e.grupo, e.nombreGrupo, e.nombreInstitucion, i.nombreCiudad, c.nombreRegion, (SELECT COUNT(*) FROM equipo) AS count FROM equipo e LEFT JOIN institucion i ON e.nombreInstitucion = i.nombreInstitucion LEFT JOIN ciudad c ON i.nombreCiudad = c.nombreCiudad LIMIT ${limit} OFFSET ${offset};`
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -8,8 +8,8 @@ const allEquipo = (conexion) => {
 	});
 }
 
-const individualEquipo = (conexion, id) => {	
-	const sql = `SELECT e.idEquipo, e.grado, e.grupo, e.nombreGrupo, e.idInstitucion, i.nombreInstitucion FROM equipo e LEFT JOIN institucion i ON e.idInstitucion = i.idInstitucion 	WHERE e.idEquipo = ${id};`;
+const searchEquipoPerInstitucion = (conexion, nombreInstitucion, limit, offset) => {	
+	const sql = `SELECT e.idEquipo, e.grado, e.grupo, e.nombreGrupo, e.nombreInstitucion, i.nombreCiudad, c.nombreRegion, (SELECT COUNT(*) FROM equipo WHERE nombreInstitucion LIKE '%${nombreInstitucion}%') AS count FROM equipo e LEFT JOIN institucion i ON e.nombreInstitucion = i.nombreInstitucion LEFT JOIN ciudad c ON i.nombreCiudad = c.nombreCiudad WHERE e.nombreInstitucion LIKE '%${nombreInstitucion}%' LIMIT ${limit} OFFSET ${offset};`
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -18,8 +18,8 @@ const individualEquipo = (conexion, id) => {
 	})
 }
 
-const addEquipo = (conexion, grado, grupo, nombreGrupo, idInstitucion) => {
-	const sql = `INSERT INTO equipo (grado, grupo, nombreGrupo, idInstitucion) VALUES (${grado}, "${grupo}", "${nombreGrupo}", ${idInstitucion})`;
+const addEquipo = (conexion, grado, grupo, nombreGrupo, nombreInstitucion) => {
+	const sql = `INSERT INTO equipo (grado, grupo, nombreGrupo, nombreInstitucion) VALUES (${grado}, "${grupo}", "${nombreGrupo}", "${nombreInstitucion}")`;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -38,8 +38,8 @@ const delEquipo = (conexion, id) => {
 	})
 }
 
-const updateEquipo = (conexion, id, grado, grupo, nombreGrupo, idInstitucion) => {
-	const sql = `UPDATE equipo SET grado = ${grado}, grupo = "${grupo}", nombreGrupo="${nombreGrupo}", idInstitucion=${idInstitucion} WHERE idEquipo = ${id};`;
+const updateEquipo = (conexion, id, grado, grupo, nombreGrupo, nombreInstitucion) => {
+	const sql = `UPDATE equipo SET grado = ${grado}, grupo = "${grupo}", nombreGrupo="${nombreGrupo}", nombreInstitucion="${nombreInstitucion}" WHERE idEquipo = ${id};`;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -50,7 +50,7 @@ const updateEquipo = (conexion, id, grado, grupo, nombreGrupo, idInstitucion) =>
 
 module.exports = {
 	allEquipo,
-	individualEquipo,
+	searchEquipoPerInstitucion,
 	addEquipo,
 	delEquipo,
 	updateEquipo

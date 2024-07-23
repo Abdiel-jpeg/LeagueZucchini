@@ -1,44 +1,44 @@
 
 import { getParams, getQueryParams } from '/js/fetchParams.js';
 
-//Como este documento es cargado en la funcion lad de window.addEventListener. 
-//Podemos programar sin miedo a cosas raras que suceden a la carga pasiva de 
-//código por el navegador. Justo aquí abajo definimos los objetos que son 
-//necesarios para este modulo. Registrar Region es un pedazo de html que se
-//mostrará en caso de que Region esté seleccionado. popup y popupContent
-//es la ventana emergente que aparece al darle al boton editar de los registros
-
 let moduloRegion = document.getElementsByClassName('moduloRegion')[0];
 let	popup = document.getElementsByClassName("popup")[0];
 let	popupContent = document.getElementsByClassName("popup-content")[0];
 
+let count = 0;
+let limit = 10;
+let offset = 0;
+
+let isBusqueda = false;
+let busqueda = "";
+
 //----------------------- AREA API  -----------------------------
 
 const fetchRegion = async () => {
-	const response = await fetch('/api/region', getParams);
+	const response = await fetch(`/api/region/get/${limit}/${offset}`, getParams);
 	const json = await response.json();
 	return json;
 }
 
-const fetchIndividualRegion = async ( { idRegion } ) => {
-	const response = await fetch(`/api/region/${idRegion}`, getParams);
+const fetchSearchRegion = async (nombreRegion) => {
+	const response = await fetch(`/api/region/search/${nombreRegion}/${limit}/${offset}`);
 	const json = await response.json();
-	return json;	
+	return json;
 }
 
-const fetchAddRegion = async (registro) => {
+const fetchAddRegion = async (nombreRegion) => {
 	const query = {
-		"nombreRegion": registro
+		"nombreRegion": nombreRegion,
 	}
 
-	const response = await fetch('/api/region', getQueryParams('POST', query));
+	const response = await fetch('/api/region/', getQueryParams('POST', query));
 	const json = await response.json();
 	return json;
 }
 
-const fetchDelRegion = async (id) => {
+const fetchDelRegion = async (nombreRegion) => {
 	const query = {
-		"idRegion": id
+		"nombreRegion": nombreRegion
 	}
 
 	const response = await fetch('/api/region', getQueryParams('DELETE', query));
@@ -46,9 +46,9 @@ const fetchDelRegion = async (id) => {
 	return json;
 }
 
-const fetchUpdateRegion = async (idRegion, nombreRegion) => {
+const fetchUpdateRegion = async (nuevoNombreRegion, nombreRegion) => {
 	const query = {
-		"idRegion": idRegion,
+		"nuevoNombreRegion": nuevoNombreRegion,
 		"nombreRegion": nombreRegion
 	}
 
@@ -59,64 +59,63 @@ const fetchUpdateRegion = async (idRegion, nombreRegion) => {
 
 //------------------- AREA FUNCIONES MODULO -----------------
 
-const insertTablaRegion = () => {
+const insertModuloRegion = async () => {
 	moduloRegion.style.display = "flex"; //Hacemos visible al modulo Region
 
-	let form = document.createElement('form');
-	let labelNombreRegion = document.createElement('label');
-	let inputNombreRegion = document.createElement('input');
-	let botonRegistrar = document.createElement('button');
+	await formularioElemento(moduloRegion); //Concatenamos formulario para insertar elementos
+	buscarElemento(moduloRegion, busqueda);
 
-	labelNombreRegion.setAttribute('for', 'inputNombreRegion');
-	labelNombreRegion.setAttribute('id', 'labelNombreRegion');
+	let containerTabla = document.createElement('div')
+	let tablaRegion = document.createElement('table');
+	let tbodyRegion = document.createElement('tbody');
+	let cabecera = document.createElement('tr');
+	let cabeceraNombreRegion = document.createElement('th');
 
-	inputNombreRegion.setAttribute('type', 'text');
-	inputNombreRegion.setAttribute('id', 'inputNombreRegion');
-	inputNombreRegion.setAttribute('name', 'inputNombreRegion');
-	inputNombreRegion.required = true;
-
-	botonRegistrar.setAttribute('type', 'submit');
-	botonRegistrar.setAttribute('id', 'nuevoRegistro');
-
-	botonRegistrar.addEventListener("click", (e) => {
-		e.preventDefault();
-
-		const nombreRegion = document.getElementById('inputNombreRegion').value;
-
-		fetchAddRegion(nombreRegion).then( (json) => {
-			if (json.error) {
-				alert("Hubo un problema al registrar la Region");
-			} else {
-				alert("El registro se ha añadido con éxito")
-				location.reload();
-			}
-		})
-	})
-
-	labelNombreRegion.appendChild(document.createTextNode("Nombre de la región:"));
-	botonRegistrar.appendChild(document.createTextNode("Registrar Región"));
-
-	form.appendChild(labelNombreRegion);
-	form.appendChild(inputNombreRegion);
-	form.appendChild(botonRegistrar);
+	containerTabla.setAttribute('class', 'containerTabla');
+	tbodyRegion.setAttribute("class", 'tablaRegion');
+	cabecera.setAttribute('class', 'cabecera');
 	
-	moduloRegion.appendChild(form);
+	cabeceraNombreRegion.appendChild(document.createTextNode('Región'));
 
-	//Explicación. al utilizar la API obtenemos un array de todos los elementos que
-	//la BBDD nos regresó. Este está en req.body. El cual seguidamente lo exploramos
-	//con un bucle for. Por cada iteracion nos mostrará una fila en patalla.
-	//Llamando a la función insertRowsTablaRegion
+	cabecera.appendChild(cabeceraNombreRegion)
+	cabecera.appendChild(document.createElement('th'));
 
-	fetchRegion().then(({ body }) => {
+	tbodyRegion.appendChild(cabecera);
+
+	if (!isBusqueda) {
+		let { body } = await fetchRegion();
+
+		count = body[0].count
+
 		for(let i = 0; i < body.length; i++) {
-			insertRowsTablaRegion(body[i]);
+			insertRowsTablaRegion(body[i], tbodyRegion);
 		}
-	});
+
+	} else {
+		let { body } = await fetchSearchRegion(busqueda);
+
+		count = body[0].count
+
+		for(let i = 0; i < body.length; i++) {
+			insertRowsTablaRegion(body[i], tbodyRegion);
+		}
+	}
+
+	tablaRegion.appendChild(tbodyRegion);
+	containerTabla.appendChild(tablaRegion);
+
+	insertPageButtons(containerTabla);
+
+	moduloRegion.appendChild(containerTabla);
 }
 
-const insertRowsTablaRegion = (item) => {
-	let row = document.createElement('div');
+const insertRowsTablaRegion = ({ nombreRegion }, tbodyRegion) => {
+	let row = document.createElement('tr');
+	let columnNombreRegion = document.createElement('th')
+	let columnEditarRegion = document.createElement('th')
 	let botonEditar = document.createElement('button');
+
+	row.setAttribute('class', 'row');
 
 	botonEditar.setAttribute('type', 'button');
 	botonEditar.setAttribute('name', 'editar');
@@ -127,73 +126,219 @@ const insertRowsTablaRegion = (item) => {
 	
 		//Al darle al boton editar, deberia salirnos el popup, llamándolo con la
 		//siguiente función
-		insertPopupContent(item);
+		insertPopupContent(nombreRegion);
 	})
 
 	botonEditar.appendChild(document.createTextNode("editar"));
 
-	row.setAttribute("id", item.idRegion);
+	columnNombreRegion.appendChild(document.createTextNode(nombreRegion));
+	columnEditarRegion.appendChild(botonEditar);
+	
+	row.appendChild(columnNombreRegion);
+	row.appendChild(columnEditarRegion);
 
-	row.appendChild(document.createTextNode(item.nombreRegion));
-	row.appendChild(botonEditar)	
-
-	moduloRegion.appendChild(row);
+	tbodyRegion.appendChild(row);
 }
 
-const insertPopupContent = (item) => {
+const insertPopupContent = (nombreRegion) => {
 	popupContent.innerHTML = ""; //Limpiamos antes de iniciar
 	popup.style.display = "flex"; //Aparecemos el popup
 
-	let regionItem;
-
 	let botonCerrar = document.createElement('button');
-	let formPopup = document.createElement('form');
-	let labelPopupNombreRegion = document.createElement('label');
-	let inputPopupNombreRegion = document.createElement('input');
-	let botonGuardar = document.createElement('button');
 	let botonEliminar = document.createElement('button');
-
-	labelPopupNombreRegion.setAttribute('for', 'inputPopupNombreRegion');
-	labelPopupNombreRegion.setAttribute('id', 'labelPopupNombreRegion');
-
-	inputPopupNombreRegion.setAttribute('type', 'text');
-	inputPopupNombreRegion.setAttribute('id', 'inputPopupNombreRegion');
-	inputPopupNombreRegion.setAttribute('name', 'inputPopupNombreRegion');
-	inputPopupNombreRegion.required = true;
-
-	botonGuardar.setAttribute('type', 'submit');
-	botonGuardar.setAttribute('id', 'guardarRegistro');
+	botonCerrar.setAttribute('class', 'botonCerrar')
 
 	botonEliminar.setAttribute('type', 'button');
+	botonEliminar.setAttribute('class', 'botonEliminar')
 
-	//Explicación. Para obtener la info que se va a modificar se le solicita 
-	//directamente a la BBDD el elemento indiviudal.
-	fetchIndividualRegion(item).then( (json) => {
-		regionItem = json.body[0]
-		inputPopupNombreRegion.value = regionItem.nombreRegion;
-	})
-
-	botonCerrar.appendChild(document.createTextNode("Cerrar"));
-	labelNombreRegion.appendChild(document.createTextNode("Nombre de la región:"));
-	botonGuardar.appendChild(document.createTextNode("Guardar Región"));
+	botonCerrar.appendChild(document.createTextNode("X"));
 	botonEliminar.appendChild(document.createTextNode("Eliminar Region"));
 
 	botonCerrar.addEventListener("click", (e) => {
-		moduloRegion.innerHTML = "";
 		popup.style.display = 'none';
-		location.reload(); //Cosas raras suceden si no recargamos la página
 	})
 
-	botonGuardar.addEventListener("click", (e) => {
+	botonEliminar.addEventListener("click", (e) => {
 		e.preventDefault();
 
-		const newNombreRegion = document.getElementById('inputPopupNombreRegion').value
+		apiDelRegion(nombreRegion);
+	})
+
+	formularioElemento(popupContent, true, nombreRegion);
+	popupContent.appendChild(botonEliminar);
+	popupContent.appendChild(botonCerrar);
+}
+
+const formularioElemento = async (parent, isPopup, nombreRegion) => {
+	let form = document.createElement('form');
+	let seccionNombreRegion = document.createElement('div')
+	let labelNombreRegion = document.createElement('label');
+	let inputNombreRegion = document.createElement('input');
+	let botonRegistrar = document.createElement('button');
+
+	form.setAttribute('class', 'form');
+	
+	seccionNombreRegion.setAttribute('class', 'seccion');
+
+	labelNombreRegion.setAttribute('for', 'inputNombreRegion');
+	labelNombreRegion.setAttribute('id', 'labelNombreRegion');
+
+	inputNombreRegion.setAttribute('type', 'text');
+	inputNombreRegion.setAttribute('id', isPopup ? 'inputPopupNombreRegion' : 'inputNombreRegion');
+	inputNombreRegion.setAttribute('name', 'inputNombreRegion');
+	inputNombreRegion.required = true;
+
+	botonRegistrar.setAttribute('type', 'submit');
+	botonRegistrar.setAttribute('id', isPopup ? 'botonGuardar' : 'nuevoRegistro');
+
+	labelNombreRegion.appendChild(document.createTextNode("Nombre de Región:"));
+	inputNombreRegion.value = isPopup ? nombreRegion : "";
+	botonRegistrar.appendChild(document.createTextNode(isPopup ? "Guardar datos" : "Registrar Region"));
+
+	botonRegistrar.addEventListener("click", (e) => {
+		e.preventDefault();
+
+		isPopup ? apiUpdateRegion(nombreRegion) : apiAddRegion();
+	})
+
+	seccionNombreRegion.appendChild(labelNombreRegion);
+	seccionNombreRegion.appendChild(inputNombreRegion);
+
+	form.appendChild(seccionNombreRegion);
+	form.appendChild(botonRegistrar);
+
+	parent.appendChild(form);
+}
+
+const buscarElemento = (parent, busqueda) => {
+	let containerBuscar = document.createElement('div');
+	let formBuscar = document.createElement('form');
+	let labelBuscarNombreRegion = document.createElement('label');
+	let inputBuscarNombreRegion = document.createElement('input');
+	let botonBuscarNombreRegion = document.createElement('button');
+
+	containerBuscar.setAttribute('class', 'containerBuscar');
+	formBuscar.setAttribute('class', 'formBuscar');
+
+	labelBuscarNombreRegion.setAttribute('id', 'labelBuscarNombreRegion');
+	labelBuscarNombreRegion.setAttribute('for', 'inputBuscarNombreRegion');
+
+	inputBuscarNombreRegion.setAttribute('type', 'text');
+	inputBuscarNombreRegion.setAttribute('name', 'inputBuscarNombreRegion');
+	inputBuscarNombreRegion.setAttribute('id', 'inputBuscarNombreRegion');
+
+	botonBuscarNombreRegion.setAttribute('type', 'submit');
+	botonBuscarNombreRegion.setAttribute('id', 'botonBuscarNombreRegion');
+
+	labelBuscarNombreRegion.appendChild(document.createTextNode('Buscar región: '));
+	inputBuscarNombreRegion.value = busqueda;
+	botonBuscarNombreRegion.appendChild(document.createTextNode('Buscar'));
+
+	botonBuscarNombreRegion.addEventListener("click", (e) => {
+		e.preventDefault();
+		apiBuscarRegion();
+	})
+
+	formBuscar.appendChild(labelBuscarNombreRegion);
+	formBuscar.appendChild(inputBuscarNombreRegion);
+	formBuscar.appendChild(botonBuscarNombreRegion);
+
+	containerBuscar.appendChild(formBuscar);
+
+	parent.appendChild(containerBuscar);
+}
+
+const insertPageButtons = (parent) => {	
+	let containerPages = document.createElement('page');
+	let labelPages = document.createElement('label');
+	let previousPage = document.createElement('button');
+	let nextPage = document.createElement('button');
+
+	containerPages.setAttribute('class', 'containerPages');
+	labelPages.setAttribute('id', 'labelPages');
+	previousPage.setAttribute('class', 'previousPage');
+	nextPage.setAttribute('class', 'nextPage');
+
+	labelPages.appendChild(document.createTextNode(`Mostrando ${offset + 10 > count ? count : offset + 10} de ${count}`))
+
+	if (offset == 0) {
+		previousPage.style.display = 'none';
+	}
+
+	if (count <= limit || offset + 10 > count) {
+		nextPage.style.display = 'none';
+	}
+
+	previousPage.appendChild(document.createTextNode('<'));
+	nextPage.appendChild(document.createTextNode('>'))
+
+	previousPage.addEventListener("click", (e) => {
+		e.preventDefault();
+
+		goToPreviousPage();
+	})
+
+	nextPage.addEventListener("click", (e) => {
+		e.preventDefault();
+
+		goToNextPage();
+	})
+
+	containerPages.appendChild(labelPages);
+	containerPages.appendChild(previousPage);
+	containerPages.appendChild(nextPage);
+
+	parent.appendChild(containerPages);
+}
+
+const goToPreviousPage = () => {
+	offset = offset - limit;
+
+	moduloRegion.innerHTML = "";
+
+	insertModuloRegion();
+}
+
+const goToNextPage = () => {
+	offset = offset + limit;
+
+	moduloRegion.innerHTML = "";
+
+	console.log(offset)
+	console.log(limit)
+
+	insertModuloRegion();
+}
+
+//-------------- AREA FUNCIONES EVENTS LISTENERS ------------
+
+const apiAddRegion = () => {
+	const nombreRegion = document.getElementById('inputNombreRegion').value;
+
+	if (nombreRegion == "") {
+		alert("Selecciona una region por favor");
+
+		return 0;
+	}
+
+	fetchAddRegion(nombreRegion).then( (json) => {
+		if (json.error) {
+			alert("Hubo un problema al registrar la Region");
+		} else {
+			alert("El registro se ha añadido con éxito")
+			location.reload();
+		}
+	})
+}
+
+const apiUpdateRegion = (nombreRegion) => {
+		const nuevoNombreRegion = document.getElementById('inputPopupNombreRegion').value
 
 		if(!confirm("¿Estas seguro de guardar cambios?")) {
 			return 0;
 		}
 
-		fetchUpdateRegion(regionItem.idRegion, newNombreRegion).then( (json) => {
+		fetchUpdateRegion(nuevoNombreRegion, nombreRegion).then( (json) => {
 			if (json.error) {
 				alert("Hubo un error al actualizar los datos");
 				console.log(json)
@@ -203,16 +348,14 @@ const insertPopupContent = (item) => {
 			alert("El guardado de los datos ha sido exitoso");
 			location.reload();
 		} )
-	})
+}
 
-	botonEliminar.addEventListener("click", (e) => {
-		e.preventDefault();
-
+const apiDelRegion = (nombreRegion) => {
 		if (!confirm("¿Seguro que quieres eliminar el registro?")) {
 			return 0;
 		}
 
-		fetchDelRegion(regionItem.idRegion).then( (json) => {
+		fetchDelRegion(nombreRegion).then( (json) => {
 			console.log(json);
 			if(json.error) {
 				alert("Hubo un error al eliminar el registro")
@@ -221,17 +364,24 @@ const insertPopupContent = (item) => {
 
 			alert("El registro ha sido eliminado con éxito!");
 			location.reload();
-			}
-		)``
-	})
-
-	formPopup.appendChild(labelPopupNombreRegion);
-	formPopup.appendChild(inputPopupNombreRegion);
-	formPopup.appendChild(botonGuardar);
-	
-	popupContent.appendChild(botonCerrar);
-	popupContent.appendChild(formPopup);
-	popupContent.appendChild(botonEliminar);
+			});
 }
 
-export default insertTablaRegion;
+const apiBuscarRegion = () => {
+	const nombreRegion = document.getElementById('inputBuscarNombreRegion').value
+
+	if (nombreRegion == "") {
+		alert("No pueden haber campos vacíos");
+
+		return 0;
+	}
+
+	isBusqueda = true;
+	busqueda = nombreRegion;
+
+	moduloRegion.innerHTML = "";
+
+	insertModuloRegion();
+}
+
+export default insertModuloRegion;

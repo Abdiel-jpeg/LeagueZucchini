@@ -38,24 +38,24 @@ conMysql();
 
 const region = require('./regionsql');
 
-const allRegion = () => {
-	return region.allRegion(conexion);
+const allRegion = ( { limit, offset } ) => {
+	return region.allRegion(conexion, limit, offset);
 }
 
-const individualRegion = ( { id } ) => {
-	return region.individualRegion(conexion, id);
+const searchRegion = ( { nombreRegion: busqueda, limit, offset } ) => {
+	return region.searchRegion(conexion, busqueda, limit, offset);
 }
 
 const addRegion = ( { nombreRegion } ) => {
 	return region.addRegion(conexion, nombreRegion);
 }
 
-const delRegion = ( { idRegion: id } ) => {
-	return region.delRegion(conexion, id);
+const delRegion = ( { nombreRegion } ) => {
+	return region.delRegion(conexion, nombreRegion);
 }
 
-const updateRegion = ( { idRegion: id, nombreRegion } ) => {
-	return region.updateRegion(conexion, id, nombreRegion);
+const updateRegion = ( { nuevoNombreRegion, nombreRegion } ) => {
+	return region.updateRegion(conexion, nuevoNombreRegion, nombreRegion);
 }
 
 
@@ -63,36 +63,44 @@ const updateRegion = ( { idRegion: id, nombreRegion } ) => {
 
 const ciudad = require('./ciudadsql');
 
-const allCiudad = () => {
-	return ciudad.allCiudad(conexion);
+const allCiudad = ( { limit, offset } ) => {
+	return ciudad.allCiudad(conexion, limit, offset);
 }
 
-const individualCiudad = ( { id } ) => {
-	return ciudad.individualCiudad(conexion, id);
+const allCiudadPerRegion = ( { nombreRegion } ) => {
+	return ciudad.allCiudadPerRegion(conexion, nombreRegion);
 }
 
-const addCiudad = ( { nombreCiudad, idRegion } ) => {
-	return ciudad.addCiudad(conexion, nombreCiudad, idRegion);
+const searchCiudad = ( { nombreCiudad: busqueda, limit, offset } ) => {
+	return ciudad.searchCiudad(conexion, busqueda, limit, offset);
 }
 
-const delCiudad = ( { idCiudad: id } ) => {
-	return ciudad.delCiudad(conexion, id);
+const addCiudad = ( { nombreCiudad, nombreRegion } ) => {
+	return ciudad.addCiudad(conexion, nombreCiudad, nombreRegion);
 }
 
-const updateCiudad = ( { idCiudad: id, nombreCiudad, idRegion } ) => {
-	return ciudad.updateCiudad(conexion, id, nombreCiudad, idRegion);
+const delCiudad = ( { nombreCiudad, nombreRegion } ) => {
+	return ciudad.delCiudad(conexion, nombreCiudad, nombreRegion);
+}
+
+const updateCiudad = ( { nuevoNombreCiudad, nuevoNombreRegion, nombreCiudad, nombreRegion } ) => {
+	return ciudad.updateCiudad(conexion, nuevoNombreCiudad, nuevoNombreRegion, nombreCiudad, nombreRegion);
 }
 
 //-------------- CONTROLADOR INSTITUCION ----------
 
 const institucion = require('./institucionsql');
 
-const allInstitucion = () => {
-	return institucion.allInstitucion(conexion);
+const allInstitucion = ( { limit, offset } ) => {
+	return institucion.allInstitucion(conexion, limit, offset);
 }
 
-const individualInstitucion = ( { id } ) => {
-	return institucion.individualInstitucion(conexion, id);
+const allInstitucionPerCiudad = ( { nombreCiudad } ) => {
+	return institucion.allInstitucionPerCiudad(conexion, nombreCiudad);
+}
+
+const searchInstitucion = ( { nombreInstitucion, limit, offset } ) => {
+	return institucion.searchInstitucion(conexion,nombreInstitucion, limit, offset)
 }
 
 const addInstitucion = ( {
@@ -100,85 +108,85 @@ const addInstitucion = ( {
 	direccionInstitucion,
 	nInstitucionPais,
 	cct,
-	idNivelEscolaridad,
-	idTurno,
-	idSostenimiento,
+	nombreNivelEscolaridad,
+	nombreTurno,
+	nombreSostenimiento,
 	paginaWebInstitucion,
-	idCiudad
+	institucionTelefono1,
+	institucionTelefono2,
+	nombreCiudad
 } ) => {
-	return institucion.addInstitucion(conexion, nombreInstitucion, direccionInstitucion, nInstitucionPais, cct, idNivelEscolaridad, idTurno, idSostenimiento, paginaWebInstitucion, idCiudad);
+	return institucion.addInstitucion(conexion, nombreInstitucion, direccionInstitucion, nInstitucionPais, cct, nombreNivelEscolaridad, nombreTurno, nombreSostenimiento, paginaWebInstitucion, institucionTelefono1, institucionTelefono2, nombreCiudad);
 }
 
-const delInstitucion = ( { idInstitucion: id } ) => {
-	return institucion.delInstitucion(conexion, id);
+const delInstitucion = ( { nombreInstitucion } ) => {
+	return institucion.delInstitucion(conexion, nombreInstitucion);
 }
 
 const updateInstitucion = ( {
-	idInstitucion : id,
+	antiguoNombreInstitucion,
 	nombreInstitucion,
 	direccionInstitucion,
 	nInstitucionPais,
 	cct,
-	idNivelEscolaridad,
-	idTurno,
-	idSostenimiento,
+	nombreNivelEscolaridad,
+	nombreTurno,
+	nombreSostenimiento,
 	paginaWebInstitucion,
-	idCiudad
+	institucionTelefono1,
+	institucionTelefono2,
+	nombreCiudad
 } ) => {
-	return institucion.updateInstitucion(conexion,id, nombreInstitucion, direccionInstitucion, nInstitucionPais, cct, idNivelEscolaridad, idTurno, idSostenimiento, paginaWebInstitucion, idCiudad);
+	return institucion.updateInstitucion(conexion, antiguoNombreInstitucion, nombreInstitucion, direccionInstitucion, nInstitucionPais, cct, nombreNivelEscolaridad, nombreTurno, nombreSostenimiento, paginaWebInstitucion, institucionTelefono1, institucionTelefono2, nombreCiudad);
 }
 
-//------ CONTROLADOR TELEFONOS INSTITUCION -------
+//------- CONTROLADOR NIVEL ESCOLARIDAD	--------
 
-const telefonosInstitucion = require('./telefonosInstitucionsql');
+const nivelEscolaridad = require('./nivelEscolaridadsql');
 
-const allTelefonosInstitucion = () => {
-	return telefonosInstitucion.allTelefonosInstitucion(conexion);
+const allNivelEscolaridad = () => {
+	return nivelEscolaridad.allNivelEscolaridad(conexion)
 }
 
-const getTelefonosInstitucion = ( { idInstitucion } ) => {
-	return telefonosInstitucion.getTelefonosInstitucion(conexion, idInstitucion);
+//-------------- CONTROLADOR TURNO --------------
+
+const turno = require('./turnosql');
+
+const allTurno = () => {
+	return turno.allTurno(conexion);
 }
 
-const addTelefonosInstitucion = ( { nTelefonoInstitucion: telefono, idInstitucion } ) => {
-	return telefonosInstitucion.addTelefonosInstitucion(conexion, telefono, idInstitucion);
+//---------- CONTROLADOR SOSTENIMIENTO -----------
+
+const sostenimiento = require('./sostenimientosql');
+
+const allSostenimiento = () => {
+	return sostenimiento.allSostenimiento(conexion);
 }
 
-const delTelefonosInstitucion = ( { nTelefonoInstitucion: telefono, idInstitucion } ) => { 
-	return telefonosInstitucion.delTelefonosInstitucion(conexion, telefono, idInstitucion);
-}
-
-const updateTelefonosInstitucion = ( {
-	nTelefonoInstitucion: telefono,
-	idInstitucion,
-	newTelefono,
-	newIdInstitucion
-} ) => {
-	return telefonosInstitucion.updateTelefonosInstitucion(conexion, telefono, idInstitucion, newTelefono, newIdInstitucion);
-}
 
 //-------------- CONTROLADOR EQUIPO -------------
 
 const equipo = require('./equiposql');
 
-const allEquipo = () => {
-	return equipo.allEquipo(conexion);
+const allEquipo = ( { limit, offset } ) => {
+	return equipo.allEquipo(conexion, limit, offset);
 }
 
-const individualEquipo = ( { id } ) => {
-	return equipo.individualEquipo(conexion, id);
+const searchEquipoPerInstitucion = ( { nombreInstitucion, limit, offset } ) => {
+	return equipo.searchEquipoPerInstitucion(conexion, nombreInstitucion, limit, offset)
 }
 
-const addEquipo = ( { grado, grupo, nombreGrupo, idInstitucion } ) => {
-	return equipo.addEquipo(conexion, grado, grupo, nombreGrupo, idInstitucion);
+const addEquipo = ( { grado, grupo, nombreGrupo, nombreInstitucion } ) => {
+	return equipo.addEquipo(conexion, grado, grupo, nombreGrupo, nombreInstitucion);
 }
 
 const delEquipo = ( { idEquipo: id } ) => {
 	return equipo.delEquipo(conexion, id);
 }
 
-const updateEquipo = ( { idEquipo: id, grado, grupo, nombreGrupo, idInstitucion } ) => {
-	return equipo.updateEquipo(conexion, id, grado, grupo, nombreGrupo, idInstitucion);
+const updateEquipo = ( { idEquipo: id, grado, grupo, nombreGrupo, nombreInstitucion } ) => {
+	return equipo.updateEquipo(conexion, id, grado, grupo, nombreGrupo, nombreInstitucion);
 }
  
 //-------------- CONTROLADOR PARTICIPANTE --------
@@ -224,35 +232,6 @@ const updateParticipante = ({
 	idEquipo
 }) => {
 	return participante.updateParticipante(conexion, id, nombreParticipante, fechaNacimientoParticipante, direccionParticipante, nss, autorizacionAdulto, enfermedadesParticipante, medicamentosParticipante, operacionesParticipante, idEquipo);
-}
-
-//---- CONTROLADOR TELEFONOS PARTICIPANTES ----
-
-const telefonosParticipante = require('./telefonosParticipantesql');
-
-const allTelefonosParticipante = () => {
-	return telefonosParticipante.allTelefonosParticipante(conexion);
-}
-
-const getTelefonosParticipante = ( { idParticipante } ) => {
-	return telefonosParticipante.getTelefonosParticipante(conexion, idParticipante);
-}
-
-const addTelefonosParticipante = ( { nTelefonoParticipante: telefono, idParticipante } ) => {
-	return telefonosParticipante.addTelefonosParticipante(conexion, telefono, idParticipante);
-}
-
-const delTelefonosParticipante = ( { nTelefonoParticipante: telefono, idParticipante } ) => {
-	return telefonosParticipante.delTelefonosParticipante(conexion, telefono, idParticipante);
-}
-
-const updateTelefonosParticipante = ( {
-	nTelefonoParticipante: telefono,
-	idParticipante,
-	newTelefono,
-	newIdParticipante
-} ) => {
-	return telefonosParticipante.updateTelefonosParticipante(conexion, telefono, idParticipante, newTelefono, newIdParticipante);
 }
 
 //---------CONTROLADOR TIPO COMPETICION-----------
@@ -329,100 +308,44 @@ const delUsuario = ({ idUsuario }) => {
 	return usuario.delUsuario(conexion, idUsuario);
 }
 
-/*
-const all = (tabla) => {
-	const sql = 'SELECT * FROM ' + tabla;
-
-	return new Promise((resolve, reject) => {
-		conexion.query(sql, (error, result) => {
-			return error ? reject(error) : resolve(result);
-		});
-	});
-}
-
-const individual = (tabla, id) => {
-	const sql = 'SELECT * FROM ' + tabla + ' WHERE idTask = ' + id;
-	return new Promise((resolve, reject) => {
-		conexion.query(sql, (error, result) => {
-			return error ? reject(error) : resolve(result);
-		})
-	});
-
-}
-
-const add = (tabla, body) => {
-	const sql = 'INSERT INTO '+tabla+' (complecion, titulo, idPrioridad, fecha) VALUES ('+body.complecion+', "'+body.titulo+'", '+body.idPrioridad+', '+body.fecha+')';
-
-	return new Promise((resolve, reject) => {
-		conexion.query(sql, (error, result) => {
-			return (error) ? reject(error) : resolve(result);
-		});
-	})
-}
-
-const del = (tabla, body) => {
-	const sql = 'DELETE FROM ' + tabla + ' WHERE idTask = ' + body.idTask;
-
-	return new Promise((resolve, reject) => {
-		conexion.query(sql, (error, result) => {
-
-		return error ? reject(error) : resolve(result);
-		})
-	})
-}
-
-const update = (tabla, body) => {
-	const sql = 'UPDATE '+tabla+' SET complecion='+body.complecion+', titulo="'+body.titulo+'", idPrioridad='+body.idPrioridad+', fecha='+body.fecha+' WHERE idTask='+body.idTask;
-
-	return new Promise((resolve, reject) => {
-		conexion.query(sql, (error, result) => {
-			return error ? reject(error) : resolve(result);
-		})
-	})
-}
-
-module.exports = {
-	all,
-	individual,
-	add,
-	del,
-	update,
-}
-*/
 
 //------------- EXPORTACION MODULOS -------------------
 module.exports = {
 	region: {
 		allRegion,
-		individualRegion,
+		searchRegion,
 		addRegion,
 		delRegion,
 		updateRegion
 	},
 	ciudad: {
 		allCiudad,
-		individualCiudad,
+		allCiudadPerRegion,
+		searchCiudad,
 		addCiudad,
 		delCiudad,
 		updateCiudad
 	},
 	institucion: {
 		allInstitucion,
-		individualInstitucion,
+		allInstitucionPerCiudad,
+		searchInstitucion,
 		addInstitucion,
 		delInstitucion,
 		updateInstitucion
 	},
-	telefonosInstitucion: {
-		allTelefonosInstitucion,
-		getTelefonosInstitucion,
-		addTelefonosInstitucion,
-		delTelefonosInstitucion,
-		updateTelefonosInstitucion
+	nivelEscolaridad: {
+		allNivelEscolaridad
+	},
+	turno: {
+		allTurno
+	},
+	sostenimiento: {
+		allSostenimiento
 	},
 	equipo: {
 		allEquipo,
-		individualEquipo,
+		searchEquipoPerInstitucion,
 		addEquipo,
 		delEquipo,
 		updateEquipo
@@ -433,13 +356,6 @@ module.exports = {
 		addParticipante,
 		delParticipante,
 		updateParticipante
-	},
-	telefonosParticipante: {
-		allTelefonosParticipante,
-		getTelefonosParticipante,
-		addTelefonosParticipante,
-		delTelefonosParticipante,
-		updateTelefonosParticipante
 	},
 	tipoCompeticion: {
 		allTipoCompeticion,

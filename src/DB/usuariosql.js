@@ -23,6 +23,8 @@ const loginUsuario = (conexion, nombreUsuario, contrasenia) => {
 			if (result.length == 0) { 
 				reject("Nombre de usaurio o contraseña incorrectos");
 			}
+			
+			console.log(sql)
 
 			return error ? reject(error) : resolve(result);
 		});

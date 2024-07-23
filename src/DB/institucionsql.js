@@ -1,5 +1,5 @@
-const allInstitucion = (conexion) => {
-	const sql = `SELECT i.idInstitucion, i.nombreInstitucion, i.direccionInstitucion, i.nInstitucionPais, i.cct, i.idNivelEscolaridad, ne.nombreNivelEscolaridad, i.idTurno, t.nombreTurno, i.idSostenimiento, s.nombreSostenimiento, i.paginaWebInstitucion, i.idCiudad, c.nombreCiudad FROM institucion i LEFT JOIN nivelEscolaridad ne ON i.idNivelEscolaridad = ne.idNivelEscolaridad LEFT JOIN turno t ON i.idTurno = t.idTurno LEFT JOIN sostenimiento s ON i.idSostenimiento = s.idSostenimiento LEFT JOIN ciudad c ON i.idCiudad = c.idCiudad;`;
+const allInstitucion = (conexion, limit, offset) => {
+	const sql = `SELECT *, (SELECT COUNT(*) FROM institucion) AS count  FROM institucion LEFT JOIN ciudad c ON institucion.nombreCiudad = c.nombreCiudad LIMIT ${limit} OFFSET ${offset};` 
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -8,8 +8,18 @@ const allInstitucion = (conexion) => {
 	})
 }
 
-const individualInstitucion = (conexion, id) => {
-	const sql = `SELECT i.idInstitucion, i.nombreInstitucion, i.direccionInstitucion, i.nInstitucionPais, i.cct, i.idNivelEscolaridad, ne.nombreNivelEscolaridad, i.idTurno, t.nombreTurno, i.idSostenimiento, s.nombreSostenimiento, i.paginaWebInstitucion, i.idCiudad, c.nombreCiudad FROM institucion i LEFT JOIN nivelEscolaridad ne ON i.idNivelEscolaridad = ne.idNivelEscolaridad LEFT JOIN turno t ON i.idTurno = t.idTurno LEFT JOIN sostenimiento s ON i.idSostenimiento = s.idSostenimiento LEFT JOIN ciudad c ON i.idCiudad = c.idCiudad WHERE i.idInstitucion = ${id};`;
+const allInstitucionPerCiudad = (conexion, nombreCiudad) => {
+	const sql = `SELECT * FROM institucion WHERE nombreCiudad = "${nombreCiudad}"`;
+
+	return new Promise((resolve, reject) => {
+		conexion.query(sql, (error, result) => {
+			return error ?  reject(error) : resolve(result);
+		})
+	})
+}
+
+const searchInstitucion = (conexion, busqueda, limit, offset) => {
+	const sql = `SELECT *, (SELECT COUNT(*) FROM institucion WHERE nombreInstitucion LIKE '%${busqueda}%') AS count FROM institucion LEFT JOIN ciudad c ON institucion.nombreCiudad = c.nombreCiudad WHERE nombreInstitucion LIKE '%${busqueda}%' LIMIT ${limit} OFFSET ${offset};`;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -24,13 +34,15 @@ const addInstitucion = (
 	direccionInstitucion, 
 	nInstitucionPais, 
 	cct, 
-	idNivelEscolaridad, 
-	idTurno, 
-	idSostenimiento, 
+	nombreNivelEscolaridad, 
+	nombreTurno, 
+	nombreSostenimiento, 
 	paginaWebInstitucion, 
-	idCiudad
+	institucionTelefono1,
+	institucionTelefono2,
+	nombreCiudad
 ) => {
-	const sql = `INSERT INTO institucion (nombreInstitucion, direccionInstitucion, nInstitucionPais, cct, idNivelEscolaridad, idTurno, idSostenimiento, paginaWebInstitucion, idCiudad) VALUES ("${nombreInstitucion}", "${direccionInstitucion}", ${nInstitucionPais}, ${cct}, ${idNivelEscolaridad}, ${idTurno}, ${idSostenimiento}, "${paginaWebInstitucion}", ${idCiudad})`;
+	const sql = `INSERT INTO institucion VALUES ("${nombreInstitucion}", "${direccionInstitucion}", ${nInstitucionPais}, ${cct}, "${nombreNivelEscolaridad}", "${nombreTurno}", "${nombreSostenimiento}", "${paginaWebInstitucion}", "${institucionTelefono1}", "${institucionTelefono2}", "${nombreCiudad}")`;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -39,8 +51,8 @@ const addInstitucion = (
 	})
 }
 
-const delInstitucion = (conexion, id) => {
-	const sql = `DELETE FROM institucion WHERE idInstitucion = ${id}`;
+const delInstitucion = (conexion, nombreInstitucion) => {
+	const sql = `DELETE FROM institucion WHERE nombreInstitucion = "${nombreInstitucion}";`;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -51,18 +63,20 @@ const delInstitucion = (conexion, id) => {
 
 const updateInstitucion = (
 	conexion,
-	id,
+	antiguoNombreInstitucion,
 	nombreInstitucion,
 	direccionInstitucion,
 	nInstitucionPais,
 	cct,
-	idNivelEscolaridad,
-	idTurno,
-	idSostenimiento,
+	nombreNivelEscolaridad,
+	nombreTurno,
+	nombreSostenimiento,
 	paginaWebInstitucion,
-	idCiudad
+	institucionTelefono1,
+	institucionTelefono2,
+	nombreCiudad
 ) => {
-	const sql = `UPDATE institucion SET nombreInstitucion = "${nombreInstitucion}", direccionInstitucion = "${direccionInstitucion}", nInstitucionPais = ${nInstitucionPais}, cct = ${cct}, idNivelEscolaridad = ${idNivelEscolaridad}, idTurno = ${idTurno}, idSostenimiento = ${idSostenimiento}, paginaWebInstitucion = "${paginaWebInstitucion}", idCiudad = ${idCiudad} WHERE idInstitucion = ${id}`;
+	const sql = `UPDATE institucion SET nombreInstitucion = "${nombreInstitucion}", direccionInstitucion = "${direccionInstitucion}", nInstitucionPais = ${nInstitucionPais}, cct = ${cct}, nombreNivelEscolaridad = "${nombreNivelEscolaridad}", nombreTurno = "${nombreTurno}", nombreSostenimiento = "${nombreSostenimiento}", paginaWebInstitucion = "${paginaWebInstitucion}", institucionTelefono1 = "${institucionTelefono1}", institucionTelefono2="${institucionTelefono2}", nombreCiudad = "${nombreCiudad}" WHERE nombreInstitucion = "${antiguoNombreInstitucion}"`;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -73,7 +87,8 @@ const updateInstitucion = (
 
 module.exports = {
 	allInstitucion,
-	individualInstitucion,
+	allInstitucionPerCiudad,
+	searchInstitucion,
 	addInstitucion,
 	delInstitucion,
 	updateInstitucion

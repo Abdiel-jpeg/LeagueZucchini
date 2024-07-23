@@ -11,10 +11,11 @@ const config = require('./config');
 const region = require('../modulos/integradora/region');
 const ciudad = require('../modulos/integradora/ciudad');
 const institucion = require('../modulos/integradora/institucion');
-const telefonosInstitucion = require ('../modulos/integradora/telefonosInstitucion');
+const nivelEscolaridad = require('../modulos/integradora/nivelEscolaridad');
+const turno = require('../modulos/integradora/turno');
+const sostenimiento = require('../modulos/integradora/sostenimiento');
 const equipo = require('../modulos/integradora/equipo');
 const participante = require('../modulos/integradora/participante');
-const telefonosParticipante = require('../modulos/integradora/telefonosParticipante');
 const tipoCompeticion = require('../modulos/integradora/tipoCompeticion');
 const competicion = require('../modulos/integradora/competicion');
 const competicionParticipantes = require('../modulos/integradora/competicionParticipantes');
@@ -108,10 +109,11 @@ app.set('port', config.app.port);
 app.use('/api/region/', region);
 app.use('/api/ciudad/', ciudad);
 app.use('/api/institucion/', institucion);
-app.use('/api/telefonosInstitucion/', telefonosInstitucion);
+app.use('/api/nivelEscolaridad', nivelEscolaridad);
+app.use('/api/turno', turno);
+app.use('/api/sostenimiento', sostenimiento);
 app.use('/api/equipo/', equipo);
 app.use('/api/participante', participante);
-app.use('/api/telefonosParticipante', telefonosParticipante);
 app.use('/api/competicion', competicion);
 app.use('/api/competicion/tipos', tipoCompeticion);
 app.use('/api/competicion/participantes', competicionParticipantes);
@@ -121,7 +123,6 @@ app.use('/api/tablaPuntaje', tablaPuntaje);
 app.use('/api/usuarioTest/', usuario);
 
 //---------------- Seccion cliente/servidor ------------------
-console.log(leagueZucchiniRouter);
 app.use('/', leagueZucchiniRouter);
 
 //Así se exporta en javasscript

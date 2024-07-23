@@ -5,15 +5,15 @@ const respuesta = require('../../red/respuestas');
 
 const router = express.Router();
 
-router.get('/', all);
-router.get('/:id', individual);
+router.get('/get/:limit/:offset', all);
+router.get('/search/:nombreInstitucion/:limit/:offset', searchPerInstitucion);
 router.post('/', add);
 router.delete('/', del);
 router.put('/', update);
 
 async function all(req, res) {
 	try{
-		const items = await controlador.allEquipo();
+		const items = await controlador.allEquipo(req.params);
 
 		respuesta.success(req, res, items, 200);
 	} catch(err) {
@@ -21,12 +21,13 @@ async function all(req, res) {
 	}
 }
 
-async function individual(req, res) {
+async function searchPerInstitucion(req, res) {
 	try {
-		const item = await controlador.individualEquipo(req.params);
+		const item = await controlador.searchEquipoPerInstitucion(req.params);
 
 		respuesta.success(req, res, item, 200);
 	} catch(err) {
+		console.log(err);
 		respuesta.error(req, res, err, 500);
 	}
 }
@@ -37,7 +38,8 @@ async function add(req, res) {
 
 		respuesta.success(req,res, response, 200);
 	} catch(err) {
-		respuesta.err(req, res, err, 500);
+		console.log(err)
+		respuesta.error(req, res, err, 500);
 	}
 }
 

@@ -1,5 +1,6 @@
-const allCiudad = (conexion) => {
-	const sql = `SELECT c.idCiudad, c.nombreCiudad, c.idRegion, r.nombreRegion FROM ciudad c LEFT JOIN region r ON c.idRegion = r.idRegion;`;
+
+const allCiudad = (conexion, limit, offset) => {
+	const sql = `SELECT *, (SELECT COUNT(*) FROM ciudad) AS count FROM ciudad LIMIT ${limit} OFFSET ${offset};`;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -8,8 +9,8 @@ const allCiudad = (conexion) => {
 	});
 }
 
-const individualCiudad = (conexion, id) => {
-	const sql = `SELECT c.idCiudad, c.nombreCiudad, c.idRegion, r.nombreRegion FROM ciudad c LEFT JOIN region r ON c.idRegion = r.idRegion WHERE c.idCiudad = ${id};`;
+const allCiudadPerRegion = (conexion, nombreRegion) => {
+	const sql = `SELECT * FROM ciudad WHERE nombreRegion = "${nombreRegion}"`;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -18,8 +19,18 @@ const individualCiudad = (conexion, id) => {
 	})
 }
 
-const addCiudad = (conexion, nombreCiudad, idRegion) => {
-	const sql = `INSERT INTO ciudad (nombreCiudad, idRegion) VALUES ("${nombreCiudad}", ${idRegion});`;
+const searchCiudad = (conexion, busqueda, limit, offset) => {
+	const sql = `SELECT *, (SELECT COUNT(*) FROM ciudad WHERE nombreCiudad LIKE '%${busqueda}%') AS count FROM ciudad WHERE nombreCiudad LIKE '%${busqueda}%' LIMIT ${limit} OFFSET ${offset};`;
+
+	return new Promise((resolve, reject) => {
+		conexion.query(sql, (error, result) => {
+			error ? reject(error) : resolve(result);
+		})
+	})
+}
+
+const addCiudad = (conexion, nombreCiudad, nombreRegion) => {
+	const sql = `INSERT INTO ciudad VALUES ("${nombreCiudad}", "${nombreRegion}")`;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -28,8 +39,8 @@ const addCiudad = (conexion, nombreCiudad, idRegion) => {
 	})
 }
 
-const delCiudad = (conexion, id) => {
-	const sql = `DELETE FROM ciudad WHERE idCiudad=${id};`;
+const delCiudad = (conexion, nombreCiudad, nombreRegion) => {
+	const sql = `DELETE FROM ciudad WHERE nombreCiudad="${nombreCiudad}" AND nombreRegion = "${nombreRegion}"`;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -38,8 +49,8 @@ const delCiudad = (conexion, id) => {
 	})
 }
 
-const updateCiudad = (conexion, id, nombreCiudad, idRegion) => {
-	const sql = `UPDATE ciudad SET nombreCiudad = "${nombreCiudad}", idRegion=${idRegion} WHERE idCiudad = ${id}`;
+const updateCiudad = (conexion, nuevoNombreCiudad, nuevoNombreRegion, nombreCiudad, nombreRegion) => {
+	const sql = `UPDATE ciudad SET nombreCiudad = "${nuevoNombreCiudad}", nombreRegion="${nuevoNombreRegion}" WHERE nombreCiudad = "${nombreCiudad}" AND nombreRegion='${nombreRegion}'`;
 
 	return new Promise((resolve, reject) => {
 		conexion.query(sql, (error, result) => {
@@ -50,7 +61,8 @@ const updateCiudad = (conexion, id, nombreCiudad, idRegion) => {
 
 module.exports = {
 	allCiudad,
-	individualCiudad,
+	allCiudadPerRegion,
+	searchCiudad,
 	addCiudad,
 	delCiudad,
 	updateCiudad

@@ -6,15 +6,15 @@ const respuesta = require('../../red/respuestas');
 
 const router = express.Router();
 
-router.get('/', all);
-router.get('/:id', individual);
+router.get('/get/:limit/:offset', all);
+router.get('/search/:nombreRegion', search)
 router.delete('/', del);
 router.post('/', add);
 router.put('/', update);
 
 async function all(req, res) {
 	try {
-		const items = await controlador.allRegion();
+		const items = await controlador.allRegion(req.params);
 
 		respuesta.success(req, res, items, 200);
 	} catch(err) {
@@ -22,13 +22,13 @@ async function all(req, res) {
 	}
 }
 
-async function individual(req, res) {
-	try { 
-		const item = await controlador.individualRegion(req.params);
+async function search(req, res) {
+	try {
+		const items = await controlador.searchRegion(req.params);
 
-		respuesta.success(req, res, item, 200);
+		respuesta.success(req, res, items, 200)
 	} catch(err) {
-		console.log(err);
+		console.log(err)
 		respuesta.error(req, res, err, 500);
 	}
 }
@@ -39,7 +39,6 @@ async function del(req, res) {
 
 		respuesta.success(req, res, response, 200);
 	} catch(err) {
-		console.log(err);
 		respuesta.error(req, res, err, 500);
 	}
 }

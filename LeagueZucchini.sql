@@ -23,13 +23,12 @@ DROP TABLE IF EXISTS `ciudad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ciudad` (
-  `idCiudad` int NOT NULL AUTO_INCREMENT,
-  `nombreCiudad` varchar(255) DEFAULT NULL,
-  `idRegion` int NOT NULL,
-  PRIMARY KEY (`idCiudad`),
-  KEY `idRegion` (`idRegion`),
-  CONSTRAINT `ciudad_ibfk_1` FOREIGN KEY (`idRegion`) REFERENCES `region` (`idRegion`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `nombreCiudad` varchar(255) NOT NULL,
+  `nombreRegion` varchar(255) NOT NULL,
+  PRIMARY KEY (`nombreCiudad`),
+  KEY `nombreRegion` (`nombreRegion`),
+  CONSTRAINT `FK_RegionesCiudad` FOREIGN KEY (`nombreRegion`) REFERENCES `region` (`nombreRegion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +37,7 @@ CREATE TABLE `ciudad` (
 
 LOCK TABLES `ciudad` WRITE;
 /*!40000 ALTER TABLE `ciudad` DISABLE KEYS */;
-INSERT INTO `ciudad` VALUES (1,'Juárez',1),(2,'Ciudad Chihuahua',1),(3,'Delicias',1),(4,'Parral',1),(5,'Cuauhtémoc',1),(6,'Hermosillo',2),(7,'Ciudad Obregón',2),(8,'Nogales',2),(9,'Guaymas',2),(10,'Navojoa',2),(11,'Saltillo',3),(12,'Torreón',3),(13,'Monclova',3),(14,'Piedras Negras',3),(15,'Acuña',3),(16,'Toluca',4),(17,'Ecatepec',4),(18,'Naucalpan',4),(19,'Nezahualcóyotl',4),(20,'Tlalnepantla',4),(21,'Mérida',5),(22,'Valladolid',5),(23,'Tizimín',5),(24,'Progreso',5),(25,'Tekax',5),(26,'Puebla',6),(27,'Tehuacán',6),(28,'San Martín Texmelucan',6),(29,'Atlixco',6),(30,'Cholula',6);
+INSERT INTO `ciudad` VALUES ('Chihuahua','Chihuahua'),('Cuauhtémoc','Chihuahua'),('Delicias','Chihuahua'),('Juárez','Chihuahua'),('Parral','Chihuahua'),('Acuña','Coahuila'),('Monclova','Coahuila'),('Piedras Negras','Coahuila'),('Saltillo','Coahuila'),('Torreón','Coahuila'),('Ecatepec','Estado de México'),('Naucalpan','Estado de México'),('Nezahualcóyotl','Estado de México'),('Tlalnepantla','Estado de México'),('Toluca','Estado de México'),('Atlixco','Puebla'),('Huauchinango','Puebla'),('Puebla','Puebla'),('San Andrés Cholula','Puebla'),('Tehuacán','Puebla'),('Ciudad Obregón','Sonora'),('Hermosillo','Sonora'),('Navojoa','Sonora'),('Nogales','Sonora'),('San Luis Río Colorado','Sonora'),('ciudad1','Test'),('Mérida','Yucatán'),('Progreso','Yucatán'),('Ticul','Yucatán'),('Tizimín','Yucatán'),('Valladolid','Yucatán'),('Fresnillo','Zacatecas'),('Guadalupe','Zacatecas'),('Jerez','Zacatecas'),('Sombrerete','Zacatecas'),('Zacatecas','Zacatecas');
 /*!40000 ALTER TABLE `ciudad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,10 +52,10 @@ CREATE TABLE `competicion` (
   `idCompeticion` int NOT NULL AUTO_INCREMENT,
   `nombreCompeticion` varchar(255) DEFAULT NULL,
   `descripcionCompeticion` text,
-  `idTipoCompeticion` int NOT NULL,
+  `nombreTipoCompeticion` varchar(255) NOT NULL,
   PRIMARY KEY (`idCompeticion`),
-  KEY `idTipoCompeticion` (`idTipoCompeticion`),
-  CONSTRAINT `competicion_ibfk_1` FOREIGN KEY (`idTipoCompeticion`) REFERENCES `tipoCompeticion` (`idTipoCompeticion`)
+  KEY `nombreTipoCompeticion` (`nombreTipoCompeticion`),
+  CONSTRAINT `competicion_ibfk_1` FOREIGN KEY (`nombreTipoCompeticion`) REFERENCES `tipoCompeticion` (`nombreTipoCompeticion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -66,7 +65,7 @@ CREATE TABLE `competicion` (
 
 LOCK TABLES `competicion` WRITE;
 /*!40000 ALTER TABLE `competicion` DISABLE KEYS */;
-INSERT INTO `competicion` VALUES (1,'Competicion Toro Nativo 25 Aniversario','Toro Nativo es una competicion entre los docentes de las distintos grupos de carreras para promover la competencia, la actividad física tanto en alumnos como en docentes y la solidaridad social. En estos eventos únicamente pueden participar docentes.',3);
+INSERT INTO `competicion` VALUES (0,'Competicion Toro Nativo 25 Aniversario','Toro Nativo es una competicion entre los docentes de las distintos grupos de carreras para promover la competencia, la actividad física tanto en alumnos como en docentes y la solidaridad social. En estos eventos únicamente pueden participar docentes.','3');
 /*!40000 ALTER TABLE `competicion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,11 +136,11 @@ CREATE TABLE `equipo` (
   `grado` int DEFAULT NULL,
   `grupo` varchar(255) DEFAULT NULL,
   `nombreGrupo` varchar(255) DEFAULT NULL,
-  `idInstitucion` int NOT NULL,
+  `nombreInstitucion` varchar(255) NOT NULL,
   PRIMARY KEY (`idEquipo`),
-  KEY `idInstitucion` (`idInstitucion`),
-  CONSTRAINT `equipo_ibfk_1` FOREIGN KEY (`idInstitucion`) REFERENCES `institucion` (`idInstitucion`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `nombreInstitucion` (`nombreInstitucion`),
+  CONSTRAINT `equipo_ibfk_1` FOREIGN KEY (`nombreInstitucion`) REFERENCES `institucion` (`nombreInstitucion`)
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +149,7 @@ CREATE TABLE `equipo` (
 
 LOCK TABLES `equipo` WRITE;
 /*!40000 ALTER TABLE `equipo` DISABLE KEYS */;
-INSERT INTO `equipo` VALUES (1,3,'TRM31','TICs sin maeta',1),(2,2,'TDM21','Los insanos',1),(3,3,'TDM33','Tecer equipo',1),(4,1,'TRM11','Los iniciales',1),(5,1,'TDM12','Primer equipo',1),(6,3,'TRS31','Superiores TIC',2),(7,2,'TDS21','Tecnólogos sonorenses',2),(8,3,'TDS33','Tercer equipo TIC',2),(9,1,'TRS11','Iniciales TIC',2),(10,1,'TDS12','Primer equipo TIC',2),(11,3,'TRC31','Superiores Coahuila',3),(12,2,'TDC21','Tecnólogos coahuilenses',3),(13,3,'TDC33','Tercer equipo Coahuila',3),(14,1,'TRC11','Iniciales Coahuila',3),(15,1,'TDC12','Primer equipo Coahuila',3),(16,3,'TRE31','Superiores EDOMEX',4),(17,2,'TDE21','Tecnólogos mexiquenses',4),(18,3,'TDE33','Tercer equipo EDOMEX',4),(19,1,'TRE11','Iniciales EDOMEX',4),(20,1,'TDE12','Primer equipo EDOMEX',4),(21,3,'TRY31','Superiores Yucatán',5),(22,2,'TDY21','Tecnólogos yucatecos',5),(23,3,'TDY33','Tercer equipo Yucatán',5),(24,1,'TRY11','Iniciales Yucatán',5),(25,1,'TDY12','Primer equipo Yucatán',5),(26,3,'TRP31','Superiores Puebla',6),(27,2,'TDP21','Tecnólogos poblanos',6),(28,3,'TDP33','Tercer equipo Puebla',6),(29,1,'TRP11','Iniciales Puebla',6),(30,1,'TDP12','Primer equipo Puebla',6);
+INSERT INTO `equipo` VALUES (32,1,'A','Team Karroten','Escuela Delicias'),(33,2,'B','Team Kartoffeln','Escuela Delicias'),(34,3,'C','Team Gemüse','Escuela Delicias'),(35,1,'A','Field Karroten','Liceo Ecatepec'),(36,2,'B','Field Kartoffeln','Liceo Ecatepec'),(37,3,'C','Field Gemüse','Liceo Ecatepec'),(38,1,'A','League Karroten','Escuela Hermosillo'),(39,2,'B','League Kartoffeln','Escuela Hermosillo'),(40,3,'C','League Gemüse','Escuela Hermosillo'),(41,1,'A','Team Karroten','Colegio Huauchinango'),(42,2,'B','Team Kartoffeln','Colegio Huauchinango'),(43,3,'C','Team Gemüse','Colegio Huauchinango'),(44,1,'A','Field Karroten','Liceo Juárez'),(45,2,'B','Field Kartoffeln','Liceo Juárez'),(46,3,'C','Field Gemüse','Liceo Juárez'),(47,1,'A','TRMA','Universidad Tecnológica de Ciudad Juárez'),(48,2,'B','League Kartoffeln','Universidad Tecnológica de Ciudad Juárez'),(50,1,'A','Team Karroten','Liceo Mérida'),(51,2,'B','Team Kartoffeln','Liceo Mérida'),(52,3,'C','Team Gemüse','Liceo Mérida'),(54,1,'TDM15','Programacion','test'),(55,1,'TDM15','Programacion','Universidad Tecnológica de Ciudad Juárez'),(56,3,'TRM31','Redes','Universidad Tecnológica de Ciudad Juárez');
 /*!40000 ALTER TABLE `equipo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,26 +209,27 @@ DROP TABLE IF EXISTS `institucion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `institucion` (
-  `idInstitucion` int NOT NULL AUTO_INCREMENT,
-  `nombreInstitucion` varchar(255) DEFAULT NULL,
+  `nombreInstitucion` varchar(255) NOT NULL,
   `direccionInstitucion` varchar(255) DEFAULT NULL,
   `nInstitucionPais` int DEFAULT NULL,
   `cct` int DEFAULT NULL,
-  `idNivelEscolaridad` int NOT NULL,
-  `idTurno` int NOT NULL,
-  `idSostenimiento` int NOT NULL,
+  `nombreNivelEscolaridad` varchar(255) NOT NULL,
+  `nombreTurno` varchar(255) NOT NULL,
+  `nombreSostenimiento` varchar(255) NOT NULL,
   `paginaWebInstitucion` varchar(255) DEFAULT NULL,
-  `idCiudad` int NOT NULL,
-  PRIMARY KEY (`idInstitucion`),
-  KEY `idCiudad` (`idCiudad`),
-  KEY `idNivelEscolaridad` (`idNivelEscolaridad`),
-  KEY `idTurno` (`idTurno`),
-  KEY `idSostenimiento` (`idSostenimiento`),
-  CONSTRAINT `institucion_ibfk_1` FOREIGN KEY (`idCiudad`) REFERENCES `ciudad` (`idCiudad`),
-  CONSTRAINT `institucion_ibfk_2` FOREIGN KEY (`idNivelEscolaridad`) REFERENCES `nivelEscolaridad` (`idNivelEscolaridad`),
-  CONSTRAINT `institucion_ibfk_3` FOREIGN KEY (`idSostenimiento`) REFERENCES `sostenimiento` (`idSostenimiento`),
-  CONSTRAINT `institucion_ibfk_4` FOREIGN KEY (`idTurno`) REFERENCES `turno` (`idTurno`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `institucionTelefono1` varchar(255) DEFAULT NULL,
+  `institucionTelefono2` varchar(255) DEFAULT NULL,
+  `nombreCiudad` varchar(255) NOT NULL,
+  PRIMARY KEY (`nombreInstitucion`),
+  KEY `nombreCiudad` (`nombreCiudad`),
+  KEY `nombreNivelEscolaridad` (`nombreNivelEscolaridad`),
+  KEY `nombreTurno` (`nombreTurno`),
+  KEY `nombreSostenimiento` (`nombreSostenimiento`),
+  CONSTRAINT `institucion_ibfk_1` FOREIGN KEY (`nombreCiudad`) REFERENCES `ciudad` (`nombreCiudad`),
+  CONSTRAINT `institucion_ibfk_2` FOREIGN KEY (`nombreNivelEscolaridad`) REFERENCES `nivelEscolaridad` (`nombreNivelEscolaridad`),
+  CONSTRAINT `institucion_ibfk_3` FOREIGN KEY (`nombreSostenimiento`) REFERENCES `sostenimiento` (`nombreSostenimiento`),
+  CONSTRAINT `institucion_ibfk_4` FOREIGN KEY (`nombreTurno`) REFERENCES `turno` (`nombreTurno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,7 +238,7 @@ CREATE TABLE `institucion` (
 
 LOCK TABLES `institucion` WRITE;
 /*!40000 ALTER TABLE `institucion` DISABLE KEYS */;
-INSERT INTO `institucion` VALUES (1,'Universidad Tecnológica de Ciudad Juárez','Esquina entre Yepomera y Calle Tórres',3051,32695,8,3,1,'utcj.edu.mx',1),(2,'Instituto Tecnológico de Ciudad Juárez','Av. Tecnológico 1340, Juárez, Chihuahua',1,123456,3,1,1,'www.itcj.edu.mx',1),(3,'Universidad de Sonora','Blvd. Luis Encinas y Rosales S/N, Hermosillo, Sonora',2,654321,3,1,1,'www.unison.mx',6),(4,'Universidad Autónoma de Coahuila','Blvd. Venustiano Carranza s/n, Saltillo, Coahuila',3,112233,3,1,1,'www.uadec.mx',11),(5,'Universidad Autónoma del Estado de México','Paseo Tollocan S/N, Toluca, Estado de México',4,334455,3,1,1,'www.uaemex.mx',16),(6,'Universidad Autónoma de Yucatán','Calle 60 S/N, Mérida, Yucatán',5,556677,3,1,1,'www.uady.mx',21),(7,'Benemérita Universidad Autónoma de Puebla','4 Sur 104 Centro Histórico, Puebla, Puebla',6,778899,3,1,1,'www.buap.mx',26);
+INSERT INTO `institucion` VALUES ('Colegio Acuña','Av. Revolución 111',6,678901,'bachillerato','abierto','privado','http://www.colegioacuna.mx','8771234567','8777654321','Acuña'),('Colegio Ciudad Obregón','Calle Reforma 666',21,345123,'primaria','nocrturno','público','http://www.colegiociudadobregon.mx','6441234567','6447654321','Ciudad Obregón'),('Colegio Cuauhtémoc','Calle Hidalgo 456',2,234567,'secundaria','vespertino','privado','http://www.colegiocuauhtemoc.mx','6251234567','6257654321','Cuauhtémoc'),('Colegio Huauchinango','Calle Reforma 222',17,890789,'licenciatura','continuo','público','http://www.colegiohuauchinango.edu.mx','7761234567','7767654321','Huauchinango'),('Colegio Nezahualcóyotl','Calle Reforma 888',13,456345,'inicial','matutino','público','http://www.colegioneza.edu.mx','5553456789','5559876543','Nezahualcóyotl'),('Colegio Saltillo','Calle Victoria 444',9,901234,'otro','nocrturno','público','http://www.colegiosaltillo.edu.mx','8441234567','8447654321','Saltillo'),('Colegio San Luis Río Colorado','Calle Reforma 100',25,789567,'profesional','matutino','público','http://www.colegiosanluisrc.mx','6531234567','6537654321','San Luis Río Colorado'),('Colegio Ticul','Calle Reforma 444',29,234901,'otro','continuo','público','http://www.colegioticul.mx','9971234567','9977654321','Ticul'),('Escuela Delicias','Calle Juárez 789',3,345678,'inicial','nocrturno','público','http://www.escueladelicias.edu.mx','6391234567','6397654321','Delicias'),('Escuela Hermosillo','Av. Morelos 777',22,456234,'secundaria','discontinuo','privado','http://www.escuelahermosillo.edu.mx','6621234567','6627654321','Hermosillo'),('Escuela Monclova','Calle Hidalgo 222',7,789012,'licenciatura','matutino','público','http://www.escuelamonclova.edu.mx','8661234567','8667654321','Monclova'),('Escuela Puebla','Av. Morelos 333',18,901890,'posgrado','abierto','privado','http://www.escuelapuebla.mx','2221234567','2227654321','Puebla'),('Escuela Test Ciudad','Av. Morelos 111',26,890678,'bachillerato','vespertino','privado','http://www.escuelatestciudad.edu.mx','5559876543','5551234567','ciudad1'),('Escuela Tlalnepantla','Av. Morelos 999',14,567456,'inicial general','vespertino','privado','http://www.escuelatlalnepantla.mx','5554567890','5550987654','Tlalnepantla'),('Escuela Torreón','Av. Universidad 555',10,123012,'preescolar','discontinuo','privado','http://www.escuelatorreon.mx','8711234567','8717654321','Torreón'),('Instituto Atlixco','Calle Juárez 111',16,789678,'bachillerato','discontinuo','privado','http://www.institutoatlixco.mx','2441234567','2447654321','Atlixco'),('Instituto Chihuahua','Av. Independencia 123',1,123456,'primaria','matutino','público','http://www.institutochihuahua.edu.mx','6141234567','6147654321','Chihuahua'),('Instituto Naucalpan','Blvd. Hidalgo 777',12,345234,'secundaria','abierto','privado','http://www.institutonaucalpan.mx','5552345678','5558765432','Naucalpan'),('Instituto Nogales','Blvd. Juárez 999',24,678456,'inicial general','abierto','privado','http://www.institutonogales.edu.mx','6311234567','6317654321','Nogales'),('Instituto Parral','Calle Reforma 654',5,567890,'profesional','continuo','público','http://www.institutoparral.edu.mx','6271234567','6277654321','Parral'),('Instituto Piedras Negras','Blvd. Morelos 333',8,890123,'posgrado','vespertino','privado','http://www.institutopiedrasnegras.mx','8781234567','8787654321','Piedras Negras'),('Instituto Progreso','Blvd. Juárez 333',28,123890,'posgrado','discontinuo','privado','http://www.institutoprogreso.edu.mx','9691234567','9697654321','Progreso'),('Instituto Tehuacán','Blvd. Juárez 555',20,234012,'preescolar','vespertino','privado','http://www.institutotehuacan.edu.mx','2381234567','2387654321','Tehuacán'),('Liceo Ecatepec','Calle Juárez 666',11,234123,'primaria','continuo','público','http://www.liceoecatepec.edu.mx','5551234567','5557654321','Ecatepec'),('Liceo Juárez','Blvd. Independencia 321',4,456789,'inicial general','discontinuo','privado','http://www.liceojuarez.mx','6561234567','6567654321','Juárez'),('Liceo Mérida','Calle Hidalgo 222',27,901789,'licenciatura','nocrturno','público','http://www.liceomerida.mx','9991234567','9997654321','Mérida'),('Liceo Navojoa','Calle Hidalgo 888',23,567345,'inicial','continuo','público','http://www.liceonavojoa.mx','6421234567','6427654321','Navojoa'),('Liceo San Andrés Cholula','Calle Hidalgo 444',19,123901,'otro','matutino','público','http://www.liceosanandres.mx','2222345678','2228765432','San Andrés Cholula'),('Liceo Toluca','Calle Hidalgo 100',15,678567,'profesional','nocrturno','público','http://www.liceotoluca.edu.mx','7221234567','7227654321','Toluca'),('test','test',1,1,'bachillerato','abierto','privado','test.com','1','1','ciudad1'),('Universidad Tecnológica de Ciudad Juárez','Yepomera Torres Lote Bravo V',67,6615,'licenciatura','matutino','público','utcj.edu.mx','123','123','Juárez');
 /*!40000 ALTER TABLE `institucion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,9 +250,8 @@ DROP TABLE IF EXISTS `nivelEscolaridad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `nivelEscolaridad` (
-  `idNivelEscolaridad` int NOT NULL,
   `nombreNivelEscolaridad` varchar(255) NOT NULL,
-  PRIMARY KEY (`idNivelEscolaridad`)
+  PRIMARY KEY (`nombreNivelEscolaridad`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -262,7 +261,7 @@ CREATE TABLE `nivelEscolaridad` (
 
 LOCK TABLES `nivelEscolaridad` WRITE;
 /*!40000 ALTER TABLE `nivelEscolaridad` DISABLE KEYS */;
-INSERT INTO `nivelEscolaridad` VALUES (1,'preescolar'),(2,'primaria'),(3,'secundaria'),(4,'inicial'),(5,'inicial general'),(6,'profesional'),(7,'bachillerato'),(8,'licenciatura'),(9,'posgrado'),(10,'otro');
+INSERT INTO `nivelEscolaridad` VALUES ('bachillerato'),('inicial'),('inicial general'),('licenciatura'),('otro'),('posgrado'),('preescolar'),('primaria'),('profesional'),('secundaria');
 /*!40000 ALTER TABLE `nivelEscolaridad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -279,6 +278,8 @@ CREATE TABLE `participante` (
   `fechaNacimientoParticipante` date DEFAULT NULL,
   `direccionParticipante` varchar(255) DEFAULT NULL,
   `nss` bigint DEFAULT NULL,
+  `participanteTelefono1` varchar(255) DEFAULT NULL,
+  `participanteTelefono2` varchar(255) DEFAULT NULL,
   `autorizacionAdulto` tinyint(1) DEFAULT NULL,
   `enfermedadesParticipante` varchar(255) DEFAULT NULL,
   `medicamentosParticipante` varchar(255) DEFAULT NULL,
@@ -296,7 +297,7 @@ CREATE TABLE `participante` (
 
 LOCK TABLES `participante` WRITE;
 /*!40000 ALTER TABLE `participante` DISABLE KEYS */;
-INSERT INTO `participante` VALUES (1,'Miguel Santos Solórzano','2005-06-30',NULL,NULL,1,NULL,NULL,NULL,1),(2,'Juan Pérez','2005-04-15','123 Calle Falsa, Ciudad Ejemplo',123456789,1,'Asma','Inhalador',NULL,1),(3,'María Gómez','2003-11-30','456 Avenida Siempre Viva, Ciudad Ejemplo',987654321,0,'Diabetes','Insulina','Apendicitis',2),(4,'Luis Martínez','2007-07-21','789 Calle del Sol, Ciudad Ejemplo',112233445,1,NULL,NULL,NULL,3),(5,'Ana López','2006-09-10','321 Calle Luna, Ciudad Ejemplo',556677889,1,'Alergia a los frutos secos','Antihistamínico',NULL,1),(6,'Carlos Ruiz','2002-01-15','654 Calle Estrella, Ciudad Ejemplo',223344556,0,'Hipertensión','Betabloqueantes','Cirugía de rodilla',2);
+INSERT INTO `participante` VALUES (1,'Miguel Santos Solórzano','2005-06-30',NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,1),(2,'Juan Pérez','2005-04-15','123 Calle Falsa, Ciudad Ejemplo',123456789,NULL,NULL,1,'Asma','Inhalador',NULL,1),(3,'María Gómez','2003-11-30','456 Avenida Siempre Viva, Ciudad Ejemplo',987654321,NULL,NULL,0,'Diabetes','Insulina','Apendicitis',2),(4,'Luis Martínez','2007-07-21','789 Calle del Sol, Ciudad Ejemplo',112233445,NULL,NULL,1,NULL,NULL,NULL,3),(5,'Ana López','2006-09-10','321 Calle Luna, Ciudad Ejemplo',556677889,NULL,NULL,1,'Alergia a los frutos secos','Antihistamínico',NULL,1),(6,'Carlos Ruiz','2002-01-15','654 Calle Estrella, Ciudad Ejemplo',223344556,NULL,NULL,0,'Hipertensión','Betabloqueantes','Cirugía de rodilla',2);
 /*!40000 ALTER TABLE `participante` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -308,10 +309,9 @@ DROP TABLE IF EXISTS `region`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `region` (
-  `idRegion` int NOT NULL AUTO_INCREMENT,
-  `nombreRegion` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`idRegion`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `nombreRegion` varchar(255) NOT NULL,
+  PRIMARY KEY (`nombreRegion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -320,7 +320,7 @@ CREATE TABLE `region` (
 
 LOCK TABLES `region` WRITE;
 /*!40000 ALTER TABLE `region` DISABLE KEYS */;
-INSERT INTO `region` VALUES (1,'Chihuahua'),(2,'Sonora'),(3,'Coahuila'),(4,'Estado de México'),(5,'Yucatán'),(6,'Puebla'),(8,'Zacatecas');
+INSERT INTO `region` VALUES ('Chihuahua'),('Coahuila'),('Estado de México'),('Puebla'),('Sonora'),('Test'),('Yucatán'),('Zacatecas');
 /*!40000 ALTER TABLE `region` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,9 +332,8 @@ DROP TABLE IF EXISTS `sostenimiento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sostenimiento` (
-  `idSostenimiento` int NOT NULL,
   `nombreSostenimiento` varchar(255) NOT NULL,
-  PRIMARY KEY (`idSostenimiento`)
+  PRIMARY KEY (`nombreSostenimiento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -344,7 +343,7 @@ CREATE TABLE `sostenimiento` (
 
 LOCK TABLES `sostenimiento` WRITE;
 /*!40000 ALTER TABLE `sostenimiento` DISABLE KEYS */;
-INSERT INTO `sostenimiento` VALUES (1,'público'),(2,'privado');
+INSERT INTO `sostenimiento` VALUES ('privado'),('público');
 /*!40000 ALTER TABLE `sostenimiento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -386,56 +385,6 @@ INSERT INTO `tablaPuntaje` VALUES (1,1,3,21,1,1,0,8,2,6,1),(2,2,1,7,1,1,0,3,1,2,
 UNLOCK TABLES;
 
 --
--- Table structure for table `telefonosInstitucion`
---
-
-DROP TABLE IF EXISTS `telefonosInstitucion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `telefonosInstitucion` (
-  `nTelefonoInstitucion` bigint NOT NULL,
-  `idInstitucion` int NOT NULL,
-  KEY `idInstitucion` (`idInstitucion`),
-  CONSTRAINT `telefonosInstitucion_ibfk_1` FOREIGN KEY (`idInstitucion`) REFERENCES `institucion` (`idInstitucion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `telefonosInstitucion`
---
-
-LOCK TABLES `telefonosInstitucion` WRITE;
-/*!40000 ALTER TABLE `telefonosInstitucion` DISABLE KEYS */;
-INSERT INTO `telefonosInstitucion` VALUES (6561234567,1),(6562345678,1),(6563456789,1),(6561234567,1),(6567654321,1),(6561122334,1),(6621234567,2),(6627654321,2),(8441234567,3),(8447654321,3),(8441122334,3),(7221234567,4),(7227654321,4),(9991234567,5),(9997654321,5),(9991122334,5),(2221234567,6),(2227654321,6);
-/*!40000 ALTER TABLE `telefonosInstitucion` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `telefonosParticipante`
---
-
-DROP TABLE IF EXISTS `telefonosParticipante`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `telefonosParticipante` (
-  `nTelefonoParticipante` bigint NOT NULL,
-  `idParticipante` int NOT NULL,
-  KEY `idParticipante` (`idParticipante`),
-  CONSTRAINT `telefonosParticipante_ibfk_1` FOREIGN KEY (`idParticipante`) REFERENCES `participante` (`idParticipante`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `telefonosParticipante`
---
-
-LOCK TABLES `telefonosParticipante` WRITE;
-/*!40000 ALTER TABLE `telefonosParticipante` DISABLE KEYS */;
-INSERT INTO `telefonosParticipante` VALUES (5551234567,1),(5559876543,1),(5552345678,2),(5558765432,2),(5553456789,3),(5557654321,3),(5554567890,4),(5556543210,4),(5555678901,5),(5555432109,5);
-/*!40000 ALTER TABLE `telefonosParticipante` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `tipoCompeticion`
 --
 
@@ -443,10 +392,9 @@ DROP TABLE IF EXISTS `tipoCompeticion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tipoCompeticion` (
-  `idTipoCompeticion` int NOT NULL AUTO_INCREMENT,
   `nombreTipoCompeticion` varchar(255) NOT NULL,
-  PRIMARY KEY (`idTipoCompeticion`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`nombreTipoCompeticion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -455,7 +403,7 @@ CREATE TABLE `tipoCompeticion` (
 
 LOCK TABLES `tipoCompeticion` WRITE;
 /*!40000 ALTER TABLE `tipoCompeticion` DISABLE KEYS */;
-INSERT INTO `tipoCompeticion` VALUES (1,'Regular. Ida y Vuelta'),(2,'Regular. Todos contra Todos'),(3,'Eliminación Directa'),(4,'Combinado');
+INSERT INTO `tipoCompeticion` VALUES ('Combinado'),('Eliminación Directa'),('Regular. Ida y Vuelta'),('Regular. Todos contra Todos');
 /*!40000 ALTER TABLE `tipoCompeticion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -467,9 +415,8 @@ DROP TABLE IF EXISTS `turno`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `turno` (
-  `idTurno` int NOT NULL,
   `nombreTurno` varchar(255) NOT NULL,
-  PRIMARY KEY (`idTurno`)
+  PRIMARY KEY (`nombreTurno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -479,7 +426,7 @@ CREATE TABLE `turno` (
 
 LOCK TABLES `turno` WRITE;
 /*!40000 ALTER TABLE `turno` DISABLE KEYS */;
-INSERT INTO `turno` VALUES (1,'no aplcia'),(2,'matutino'),(3,'vespertino'),(4,'nocrturno'),(5,'discontinuo'),(6,'continuo'),(7,'abierto');
+INSERT INTO `turno` VALUES ('abierto'),('continuo'),('discontinuo'),('matutino'),('no aplcia'),('nocrturno'),('vespertino');
 /*!40000 ALTER TABLE `turno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -520,4 +467,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-17 19:47:28
+-- Dump completed on 2024-07-22 20:12:43
