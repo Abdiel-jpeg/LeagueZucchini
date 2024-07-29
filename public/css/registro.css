@@ -18,10 +18,17 @@
 	align-items: center;
 }
 
+.moduloCompeticion {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 .form {
 	display: flex;
 	margin: 20px;
 	max-width: 85%;
+	justify-content: space-between;
 	flex-wrap: wrap;
 	padding: 15px;
 	border: dashed 1px black;
@@ -32,8 +39,14 @@
 	max-height: 600px;
 }
 
+.moduloCompeticion .form {
+	width: 50%;
+}
+
 .form * {
+	display: flex;
 	margin-bottom: 15px;
+	align-items: center;
 }
 
 .containerBuscar {

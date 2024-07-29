@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Control de Competiciones</title>
+		<link rel='stylesheet' href='/css/registro.css'>
+		<link rel='stylesheet' href='/css/controlCompeticiones.css'>
+		<script type="module" src='/js/controlCompeticiones.js'></script>
+	</head>
+
+	<body>
+		<h1>Control versiones</h1>
+
+		<div class='opcion'>
+			<select id="selectOpcion" name="selectOpcion">
+				<option value="Gestion Competicion">Gestión Competición</option>
+				<option value="Asignar equipos">Asignar equipos</option>
+			</select>
+		</div>
+
+		<div class="moduloCompeticion">
+		</div>
+
+		<div class="moduloAsignarEquipos">
+
+			<div class='seccion-aisgnar-equipos'>
+				<div class='head-asignar-equipos'>
+					<label id="labelSeleccionarCompeticion">Seleccionar competicion:</label>
+					<select id="selectCompeticion" name="selectCompeticion">
+					</select>
+
+					<div class='seccion-labels-competicion'>
+						<div>
+							<label>Tipo competición:</label>
+						</div>
+
+						<div id='labelsCompeticion'>
+						</div>
+					</div>
+
+				</div>
+
+				<div class='containerTabla'>
+					<table>
+						<tbody id='tbodyParticipantes'>
+						</tbody>
+					</table>
+				</div>
+
+				<div>
+					<button id='botonEliminar'>Eliminar seleccionados</button>
+				</div>
+
+				<div>
+					<button id='generarEventos'>Generar eventos</button>
+				</div>
+			</div>
+
+			<div class='seccion-equipos'>
+				<div class='seleccionInstitucion'>
+					<div>
+						<label id='labelSeleccionarRegion'>Seleccionar Región:</label>
+						<select id="selectRegion" name="selectRegion">
+						</select>
+					</div>
+
+					<div>
+						<label id='labelSeleccionarCiudad'>Seleccionar Ciudad:</label>
+						<select id="selectCiudad" name="selectCiudad">
+						</select>
+					</div>
+
+					<div>
+						<label id="labelSeleccionarInstitucion">Seleccionar Institucion:</label>
+						<select id="selectInstitucion" name="selectInstitucion">
+						</select>
+					</div>
+				</div>
+
+				<div class='containerTabla'>
+					<table>
+						<tbody id="tbodyEquipos">
+						</tbody>
+					</table>
+				</div>
+
+				<div class='añadir-a-competicion'>
+					<button id='añadirACompeticion'>Añadir</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+    <div class="popup">
+      <div class="popup-content">
+        <button type="button" id="cerrar">Cerrar</button>
+        <button type="button" id="eliminar">Eliminar</button>
+      </div>
+		</div>
+		</div>
+	</body>
+</html>

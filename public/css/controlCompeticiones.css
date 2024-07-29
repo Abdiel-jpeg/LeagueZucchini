@@ -1,0 +1,47 @@
+
+.moduloAsignarEquipos {
+	display: none;
+	flex-direction: row-reverse;
+	justify-content: space-around;
+	margin-top: 15px;
+}
+
+.moduloAsignarEquipos > div {
+	border: 1px dashed black;
+	padding: 25px;
+}
+
+.seleccionInstitucion {
+	display: flex;
+	flex-direction: column;
+}
+
+.seleccionInstitucion * {
+	margin: 5px;
+}
+
+.añadir-a-competicion {
+	display: none;
+	margin-top: 15px;
+	justify-content: center;
+}
+
+.head-asignar-equipos {
+	display: flex;
+	flex-direction: column;
+}
+
+.head-asignar-equipos * {
+	margin: 5px;
+}
+
+.seccion-labels-competicion {
+	display: flex;
+	flex-direction: row;
+	align-items: space-between;
+}
+
+.seccion-labels-competicion * {
+	display: flex;
+	align-items: center;
+}

@@ -28,7 +28,11 @@ router.get('/admin/', (req, res) => {
 })
 
 router.get('/registro/', (req, res) => {
-	res.sendFile(path.join(__dirname, '../../public/html/registro.html'))
+	res.sendFile(path.join(__dirname, '../../public/html/registro.html'));
+})
+
+router.get('/control-competiciones/', (req, res) => {
+	res.sendFile(path.join(__dirname, '../../public/html/controlCompeticiones.html'));
 })
 
 module.exports = router;

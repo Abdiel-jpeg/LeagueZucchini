@@ -242,12 +242,34 @@ const allTipoCompeticion = () => {
 	return tipoCompeticion.allTipoCompeticion(conexion);
 }
 
+
 //----------- CONTROLADOR COMPETICION -------------
 
 const competicion = require('./competicionsql');
 
-const allCompeticion = () => {
-	return competicion.allCompeticion(conexion);
+const allCompeticion = ( { limit, offset } ) => {
+	return competicion.allCompeticion(conexion, limit, offset);
+}
+
+const searchCompeticion = ( { nombreCompeticion: busqueda, limit, offset } ) => {
+	return competicion.searchCompeticion(conexion, busqueda, limit, offset);
+}
+
+const addCompeticion = ( { nombreCompeticion, descripcionCompeticion, nombreTipoCompeticion } ) => {
+	return competicion.addCompeticion(conexion, nombreCompeticion, descripcionCompeticion, nombreTipoCompeticion);
+}
+
+const delCompeticion = ( { idCompeticion: id } ) => {
+	return competicion.delCompeticion(conexion, id);
+}
+
+const updateCompeticion = ({
+	idCompeticion: id,
+	nombreCompeticion,
+	descripcionCompeticion,
+	nombreTipoCompeticion
+}) => {
+	return competicion.updateCompeticion(conexion, id, nombreCompeticion, descripcionCompeticion, nombreTipoCompeticion);
 }
 
 //------------- CONTROLADOR EVENTO --------------
@@ -262,8 +284,16 @@ const allEvento = () => {
 
 const competicionParticipantes = require('./competicionParticipantessql');
 
-const allCompeticionParticipantes = () => {
-	return competicionParticipantes.allCompeticionParticipantes(conexion);
+const allCompeticionParticipantes = ( { nombreCompeticion } ) => {
+	return competicionParticipantes.allCompeticionParticipantes(conexion, nombreCompeticion);
+}
+
+const addCompeticionParticipantes = ( { nombreCompeticion, idEquipo } ) => {
+	return competicionParticipantes.addCompeticionParticipantes(conexion, nombreCompeticion, idEquipo);
+}
+
+const delCompeticionParticipantes = ( { nombreCompeticion, idEquipo } ) => {
+	return competicionParticipantes.delCompeticionParticipantes(conexion, nombreCompeticion, idEquipo);
 }
 
 // CONTROLADOR COMPETICION COMBINADA PARTICIPANTES
@@ -362,12 +392,18 @@ module.exports = {
 	},
 	competicion: {
 		allCompeticion,
+		searchCompeticion,
+		addCompeticion,
+		delCompeticion,
+		updateCompeticion,
 	},
 	evento: {
 		allEvento,
 	},
 	competicionParticipantes: {
 		allCompeticionParticipantes,
+		addCompeticionParticipantes,
+		delCompeticionParticipantes
 	},
 	competicionCombinadaParticipantes: {
 		allCompeticionCombinadaParticipantes,
