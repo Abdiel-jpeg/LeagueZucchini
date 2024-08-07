@@ -11,6 +11,14 @@
 	padding: 25px;
 }
 
+.moduloEvento {
+	flex-direction: column;
+}
+
+.moduloEvento > div {
+	padding: 25px;
+}
+
 .seleccionInstitucion {
 	display: flex;
 	flex-direction: column;

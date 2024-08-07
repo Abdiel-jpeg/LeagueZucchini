@@ -56,7 +56,7 @@ CREATE TABLE `competicion` (
   PRIMARY KEY (`idCompeticion`),
   KEY `nombreTipoCompeticion` (`nombreTipoCompeticion`),
   CONSTRAINT `competicion_ibfk_1` FOREIGN KEY (`nombreTipoCompeticion`) REFERENCES `tipoCompeticion` (`nombreTipoCompeticion`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `competicion` (
 
 LOCK TABLES `competicion` WRITE;
 /*!40000 ALTER TABLE `competicion` DISABLE KEYS */;
-INSERT INTO `competicion` VALUES (0,'Competicion Toro Nativo 25 Aniversario','Toro Nativo es una competicion entre los docentes de las distintos grupos de carreras para promover la competencia, la actividad física tanto en alumnos como en docentes y la solidaridad social. En estos eventos únicamente pueden participar docentes.','3');
+INSERT INTO `competicion` VALUES (0,'Toro Nativo Aniversario 25','Toro Nativo es una competicion entre los docentes de las distintos grupos de carreras para promover la competencia, la actividad física tanto en alumnos como en docentes y la solidaridad social. En estos eventos únicamente pueden participar docentes.','Combinado'),(3,'test','Descripcion','Regular. Todos contra Todos'),(5,'test 3','descripcion','Eliminación Directa'),(6,'test casa visitante','test casa y visitante','Regular. Ida y Vuelta');
 /*!40000 ALTER TABLE `competicion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,6 +98,39 @@ INSERT INTO `competicionCombinadaParticipantes` VALUES (1,1,0),(1,2,0),(1,3,1);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `competicionEliminacionDirectaParticipante`
+--
+
+DROP TABLE IF EXISTS `competicionEliminacionDirectaParticipante`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `competicionEliminacionDirectaParticipante` (
+  `idCompeticionEliminacionDirectaParticipante` int NOT NULL,
+  `idEquipo1` int DEFAULT NULL,
+  `idEquipo2` int DEFAULT NULL,
+  `idLinkTo` int DEFAULT NULL,
+  `idCompeticion` int NOT NULL,
+  KEY `idEquipo1` (`idEquipo1`),
+  KEY `idEquipo2` (`idEquipo2`),
+  KEY `idLinkTo` (`idLinkTo`),
+  KEY `idCompeticion` (`idCompeticion`),
+  CONSTRAINT `competicionEliminacionDirectaParticipante_ibfk_1` FOREIGN KEY (`idEquipo1`) REFERENCES `equipo` (`idEquipo`),
+  CONSTRAINT `competicionEliminacionDirectaParticipante_ibfk_2` FOREIGN KEY (`idEquipo2`) REFERENCES `equipo` (`idEquipo`),
+  CONSTRAINT `competicionEliminacionDirectaParticipante_ibfk_4` FOREIGN KEY (`idCompeticion`) REFERENCES `competicion` (`idCompeticion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `competicionEliminacionDirectaParticipante`
+--
+
+LOCK TABLES `competicionEliminacionDirectaParticipante` WRITE;
+/*!40000 ALTER TABLE `competicionEliminacionDirectaParticipante` DISABLE KEYS */;
+INSERT INTO `competicionEliminacionDirectaParticipante` VALUES (0,NULL,NULL,NULL,5),(1,NULL,NULL,0,5),(2,44,45,1,5),(3,NULL,46,1,5),(4,47,48,3,5),(5,NULL,NULL,0,5),(6,55,56,5,5),(7,NULL,57,5,5),(8,58,59,7,5);
+/*!40000 ALTER TABLE `competicionEliminacionDirectaParticipante` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `competicionParticipantes`
 --
 
@@ -107,6 +140,7 @@ DROP TABLE IF EXISTS `competicionParticipantes`;
 CREATE TABLE `competicionParticipantes` (
   `idCompeticion` int NOT NULL,
   `idEquipo` int NOT NULL,
+  UNIQUE KEY `idCompeticion_2` (`idCompeticion`,`idEquipo`),
   KEY `idCompeticion` (`idCompeticion`),
   KEY `idEquipo` (`idEquipo`),
   CONSTRAINT `participantesTorneo_ibfk_1` FOREIGN KEY (`idCompeticion`) REFERENCES `competicion` (`idCompeticion`),
@@ -120,7 +154,7 @@ CREATE TABLE `competicionParticipantes` (
 
 LOCK TABLES `competicionParticipantes` WRITE;
 /*!40000 ALTER TABLE `competicionParticipantes` DISABLE KEYS */;
-INSERT INTO `competicionParticipantes` VALUES (1,1),(1,2),(1,3);
+INSERT INTO `competicionParticipantes` VALUES (3,47),(3,48),(3,55),(3,56),(3,57),(3,58),(3,59),(5,44),(5,45),(5,46),(5,47),(5,48),(5,55),(5,56),(5,57),(5,58),(5,59),(6,47),(6,48),(6,55),(6,56),(6,57),(6,58),(6,59);
 /*!40000 ALTER TABLE `competicionParticipantes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +174,7 @@ CREATE TABLE `equipo` (
   PRIMARY KEY (`idEquipo`),
   KEY `nombreInstitucion` (`nombreInstitucion`),
   CONSTRAINT `equipo_ibfk_1` FOREIGN KEY (`nombreInstitucion`) REFERENCES `institucion` (`nombreInstitucion`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +183,7 @@ CREATE TABLE `equipo` (
 
 LOCK TABLES `equipo` WRITE;
 /*!40000 ALTER TABLE `equipo` DISABLE KEYS */;
-INSERT INTO `equipo` VALUES (32,1,'A','Team Karroten','Escuela Delicias'),(33,2,'B','Team Kartoffeln','Escuela Delicias'),(34,3,'C','Team Gemüse','Escuela Delicias'),(35,1,'A','Field Karroten','Liceo Ecatepec'),(36,2,'B','Field Kartoffeln','Liceo Ecatepec'),(37,3,'C','Field Gemüse','Liceo Ecatepec'),(38,1,'A','League Karroten','Escuela Hermosillo'),(39,2,'B','League Kartoffeln','Escuela Hermosillo'),(40,3,'C','League Gemüse','Escuela Hermosillo'),(41,1,'A','Team Karroten','Colegio Huauchinango'),(42,2,'B','Team Kartoffeln','Colegio Huauchinango'),(43,3,'C','Team Gemüse','Colegio Huauchinango'),(44,1,'A','Field Karroten','Liceo Juárez'),(45,2,'B','Field Kartoffeln','Liceo Juárez'),(46,3,'C','Field Gemüse','Liceo Juárez'),(47,1,'A','TRMA','Universidad Tecnológica de Ciudad Juárez'),(48,2,'B','League Kartoffeln','Universidad Tecnológica de Ciudad Juárez'),(50,1,'A','Team Karroten','Liceo Mérida'),(51,2,'B','Team Kartoffeln','Liceo Mérida'),(52,3,'C','Team Gemüse','Liceo Mérida'),(54,1,'TDM15','Programacion','test'),(55,1,'TDM15','Programacion','Universidad Tecnológica de Ciudad Juárez'),(56,3,'TRM31','Redes','Universidad Tecnológica de Ciudad Juárez');
+INSERT INTO `equipo` VALUES (32,1,'A','Team Karroten','Escuela Delicias'),(33,2,'B','Team Kartoffeln','Escuela Delicias'),(34,3,'C','Team Gemüse','Escuela Delicias'),(35,1,'A','Field Karroten','Liceo Ecatepec'),(36,2,'B','Field Kartoffeln','Liceo Ecatepec'),(37,3,'C','Field Gemüse','Liceo Ecatepec'),(38,1,'A','League Karroten','Escuela Hermosillo'),(39,2,'B','League Kartoffeln','Escuela Hermosillo'),(40,3,'C','League Gemüse','Escuela Hermosillo'),(41,1,'A','Team Karroten','Colegio Huauchinango'),(42,2,'B','Team Kartoffeln','Colegio Huauchinango'),(43,3,'C','Team Gemüse','Colegio Huauchinango'),(44,1,'A','Field Karroten','Liceo Juárez'),(45,2,'B','Field Kartoffeln','Liceo Juárez'),(46,3,'C','Field Gemüse','Liceo Juárez'),(47,1,'TRM11','Redes Septiembre Diciembre','Universidad Tecnológica de Ciudad Juárez'),(48,2,'TRM22','Redes Enero Abril','Universidad Tecnológica de Ciudad Juárez'),(50,1,'A','Team Karroten','Liceo Mérida'),(51,2,'B','Team Kartoffeln','Liceo Mérida'),(52,3,'C','Team Gemüse','Liceo Mérida'),(54,1,'TDM15','Programacion','test'),(55,1,'TDM15','Programacion','Universidad Tecnológica de Ciudad Juárez'),(56,3,'TRM31','Redes','Universidad Tecnológica de Ciudad Juárez'),(57,3,'TDM33','Programacion Abril Agosto','Universidad Tecnológica de Ciudad Juárez'),(58,1,'TRM12','Redes Septiembre Diciembre','Universidad Tecnológica de Ciudad Juárez'),(59,1,'TDW11','Programacion Vespertino Septiembre Diciembre','Universidad Tecnológica de Ciudad Juárez');
 /*!40000 ALTER TABLE `equipo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,18 +199,18 @@ CREATE TABLE `evento` (
   `nombreEvento` varchar(255) DEFAULT NULL,
   `faseActual` varchar(255) DEFAULT NULL,
   `fechaInicio` datetime DEFAULT NULL,
-  `idEquipo1` int NOT NULL,
+  `idEquipo1` int DEFAULT NULL,
   `golesEquipo1` int DEFAULT NULL,
   `tarjetasAmarillasEquipo1` int DEFAULT NULL,
   `tarjetasRojasEquipo1` int DEFAULT NULL,
   `golesPenalesFinalesEquipo1` int DEFAULT NULL,
-  `idEquipo2` int NOT NULL,
+  `idEquipo2` int DEFAULT NULL,
   `golesEquipo2` int DEFAULT NULL,
   `tarjetasAmarillasEquipo2` int DEFAULT NULL,
   `tarjetasRojasEquipo2` int DEFAULT NULL,
   `golesPenalesFinalesEquipo2` int DEFAULT NULL,
   `cantidadTiempoExtra` int DEFAULT NULL,
-  `ganadorPartido` int DEFAULT NULL,
+  `ganadorPartido` varchar(24) DEFAULT NULL,
   `esPartidoEmpatado` tinyint(1) DEFAULT NULL,
   `puntosEquipo1` int DEFAULT NULL,
   `puntosEquipo2` int DEFAULT NULL,
@@ -188,7 +222,7 @@ CREATE TABLE `evento` (
   CONSTRAINT `evento_ibfk_1` FOREIGN KEY (`idCompeticion`) REFERENCES `competicion` (`idCompeticion`),
   CONSTRAINT `evento_ibfk_2` FOREIGN KEY (`idEquipo1`) REFERENCES `equipo` (`idEquipo`),
   CONSTRAINT `evento_ibfk_3` FOREIGN KEY (`idEquipo2`) REFERENCES `equipo` (`idEquipo`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,7 +231,7 @@ CREATE TABLE `evento` (
 
 LOCK TABLES `evento` WRITE;
 /*!40000 ALTER TABLE `evento` DISABLE KEYS */;
-INSERT INTO `evento` VALUES (1,'TICs sin maeta vs Los insanos','Semifinales','2024-06-30 07:30:00',1,0,0,0,0,2,0,0,0,0,9,1,0,3,0,1),(2,'TICs vs Tercer equipo','Semifinales','2024-06-30 07:30:00',1,0,0,0,0,3,0,0,0,0,9,1,0,3,0,1),(3,'Los insanos vs Tercer equipo','Semifinales','2024-06-30 07:30:00',2,0,0,0,0,3,0,0,0,0,9,1,0,3,0,1);
+INSERT INTO `evento` VALUES (1,'TICs sin maeta vs Los insanos','Semifinales','2024-06-30 07:30:00',1,0,0,0,0,2,0,0,0,0,9,'1',0,3,0,1),(2,'TICs vs Tercer equipo','Semifinales','2024-06-30 07:30:00',1,0,0,0,0,3,0,0,0,0,9,'1',0,3,0,1),(3,'Los insanos vs Tercer equipo','Semifinales','2024-06-30 07:30:00',2,0,0,0,0,3,0,0,0,0,9,'1',0,3,0,1),(26,'47 vs 48',NULL,NULL,47,NULL,NULL,NULL,NULL,48,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(27,'47 vs 55',NULL,NULL,47,NULL,NULL,NULL,NULL,55,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(28,'47 vs 56',NULL,NULL,47,NULL,NULL,NULL,NULL,56,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(29,'47 vs 57',NULL,NULL,47,NULL,NULL,NULL,NULL,57,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(30,'47 vs 58',NULL,NULL,47,NULL,NULL,NULL,NULL,58,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(31,'47 vs 59',NULL,NULL,47,NULL,NULL,NULL,NULL,59,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(32,'48 vs 55',NULL,NULL,48,NULL,NULL,NULL,NULL,55,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(33,'48 vs 56',NULL,NULL,48,NULL,NULL,NULL,NULL,56,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(34,'48 vs 57',NULL,NULL,48,NULL,NULL,NULL,NULL,57,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(35,'48 vs 58',NULL,NULL,48,NULL,NULL,NULL,NULL,58,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(36,'48 vs 59',NULL,NULL,48,NULL,NULL,NULL,NULL,59,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(37,'55 vs 56',NULL,NULL,55,NULL,NULL,NULL,NULL,56,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(38,'55 vs 57',NULL,NULL,55,NULL,NULL,NULL,NULL,57,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(39,'55 vs 58',NULL,NULL,55,NULL,NULL,NULL,NULL,58,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(40,'55 vs 59',NULL,NULL,55,NULL,NULL,NULL,NULL,59,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(41,'56 vs 57',NULL,NULL,56,NULL,NULL,NULL,NULL,57,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(42,'56 vs 58',NULL,NULL,56,NULL,NULL,NULL,NULL,58,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(43,'56 vs 59',NULL,NULL,56,NULL,NULL,NULL,NULL,59,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(44,'57 vs 58',NULL,NULL,57,NULL,NULL,NULL,NULL,58,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(45,'57 vs 59',NULL,NULL,57,NULL,NULL,NULL,NULL,59,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(46,'58 vs 59',NULL,NULL,58,NULL,NULL,NULL,NULL,59,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3),(89,'47 vs 48',NULL,NULL,47,NULL,NULL,NULL,NULL,48,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(90,'48 vs 47',NULL,NULL,48,NULL,NULL,NULL,NULL,47,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(91,'47 vs 55',NULL,NULL,47,NULL,NULL,NULL,NULL,55,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(92,'55 vs 47',NULL,NULL,55,NULL,NULL,NULL,NULL,47,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(93,'47 vs 56',NULL,NULL,47,NULL,NULL,NULL,NULL,56,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(94,'56 vs 47',NULL,NULL,56,NULL,NULL,NULL,NULL,47,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(95,'47 vs 57',NULL,NULL,47,NULL,NULL,NULL,NULL,57,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(96,'57 vs 47',NULL,NULL,57,NULL,NULL,NULL,NULL,47,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(97,'47 vs 58',NULL,NULL,47,NULL,NULL,NULL,NULL,58,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(98,'58 vs 47',NULL,NULL,58,NULL,NULL,NULL,NULL,47,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(99,'47 vs 59',NULL,NULL,47,NULL,NULL,NULL,NULL,59,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(100,'59 vs 47',NULL,NULL,59,NULL,NULL,NULL,NULL,47,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(101,'48 vs 55',NULL,NULL,48,NULL,NULL,NULL,NULL,55,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(102,'55 vs 48',NULL,NULL,55,NULL,NULL,NULL,NULL,48,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(103,'48 vs 56',NULL,NULL,48,NULL,NULL,NULL,NULL,56,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(104,'56 vs 48',NULL,NULL,56,NULL,NULL,NULL,NULL,48,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(105,'48 vs 57',NULL,NULL,48,NULL,NULL,NULL,NULL,57,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(106,'57 vs 48',NULL,NULL,57,NULL,NULL,NULL,NULL,48,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(107,'48 vs 58',NULL,NULL,48,NULL,NULL,NULL,NULL,58,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(108,'58 vs 48',NULL,NULL,58,NULL,NULL,NULL,NULL,48,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(109,'48 vs 59',NULL,NULL,48,NULL,NULL,NULL,NULL,59,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(110,'59 vs 48',NULL,NULL,59,NULL,NULL,NULL,NULL,48,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(111,'55 vs 56',NULL,NULL,55,NULL,NULL,NULL,NULL,56,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(112,'56 vs 55',NULL,NULL,56,NULL,NULL,NULL,NULL,55,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(113,'55 vs 57',NULL,NULL,55,NULL,NULL,NULL,NULL,57,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(114,'57 vs 55',NULL,NULL,57,NULL,NULL,NULL,NULL,55,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(115,'55 vs 58',NULL,NULL,55,NULL,NULL,NULL,NULL,58,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(116,'58 vs 55',NULL,NULL,58,NULL,NULL,NULL,NULL,55,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(117,'55 vs 59',NULL,NULL,55,NULL,NULL,NULL,NULL,59,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(118,'59 vs 55',NULL,NULL,59,NULL,NULL,NULL,NULL,55,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(119,'56 vs 57',NULL,NULL,56,NULL,NULL,NULL,NULL,57,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(120,'57 vs 56',NULL,NULL,57,NULL,NULL,NULL,NULL,56,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(121,'56 vs 58',NULL,NULL,56,NULL,NULL,NULL,NULL,58,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(122,'58 vs 56',NULL,NULL,58,NULL,NULL,NULL,NULL,56,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(123,'56 vs 59',NULL,NULL,56,NULL,NULL,NULL,NULL,59,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(124,'59 vs 56',NULL,NULL,59,NULL,NULL,NULL,NULL,56,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(125,'57 vs 58',NULL,NULL,57,NULL,NULL,NULL,NULL,58,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(126,'58 vs 57',NULL,NULL,58,NULL,NULL,NULL,NULL,57,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(127,'57 vs 59',NULL,NULL,57,NULL,NULL,NULL,NULL,59,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(128,'59 vs 57',NULL,NULL,59,NULL,NULL,NULL,NULL,57,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(129,'58 vs 59',NULL,NULL,58,NULL,NULL,NULL,NULL,59,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(130,'59 vs 58',NULL,NULL,59,NULL,NULL,NULL,NULL,58,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,6),(131,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5),(132,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5),(133,'44 vs 45',NULL,NULL,44,NULL,NULL,NULL,NULL,45,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5),(134,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,46,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5),(135,'47 vs 48',NULL,NULL,47,NULL,NULL,NULL,NULL,48,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5),(136,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5),(137,'55 vs 56',NULL,NULL,55,NULL,NULL,NULL,NULL,56,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5),(138,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,57,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5),(139,'58 vs 59',NULL,NULL,58,NULL,NULL,NULL,NULL,59,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,5);
 /*!40000 ALTER TABLE `evento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -467,4 +501,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-22 20:12:43
+-- Dump completed on 2024-08-07  7:07:26

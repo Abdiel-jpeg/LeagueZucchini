@@ -14,6 +14,13 @@ body {
 		font-size: 2.5em;
 }
 
+#tipoCompeticion {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 5px;
+}
+
 table {
 		width: 80%;
 		margin: 20px auto;

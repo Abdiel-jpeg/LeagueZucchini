@@ -1,7 +1,14 @@
 
 import { getParams } from "/js/fetchParams.js";
 
+let divTipoCompeticion;
 let tbody;
+
+const fetchCompeticion = async () => {
+	const response = await fetch('/api/competicion/get/0/0', getParams);
+	const json = response.json();
+	return json;
+}
 
 const fetchTablaPuntaje = async () => {
 	const response = await fetch('/api/tablaPuntaje', getParams);
@@ -48,14 +55,67 @@ const insertRow = (item) => {
 	tbody.appendChild(row);
 }
 
+const addCompeticionToSelect = () => {
+	let selectCompeticion = document.getElementById("selectCompeticion");
+	divTipoCompeticion = document.getElementById('tipoCompeticion');
+
+	let optionDefault = document.createElement('option');
+
+	optionDefault.setAttribute('value', '');
+	optionDefault.setAttribute('selected', 'selected');
+	optionDefault.setAttribute('disabled', 'disabled');
+	optionDefault.setAttribute('hidden', 'hidden');
+
+	optionDefault.appendChild(document.createTextNode('Selecciona una Competición'));
+
+	selectCompeticion.appendChild(optionDefault);
+
+	fetchCompeticion().then( ( { body } ) => {
+		for (let i = 0; i < body.length; i++) {
+			let option = document.createElement('option');
+			let div = document.createElement('div');
+
+			option.setAttribute('value', body[i].nombreCompeticion);
+			div.setAttribute('id', body[i].nombreCompeticion);
+			div.setAttribute('class', 'tipoCompeticion');
+
+			div.style.display = "none";
+
+			option.appendChild(document.createTextNode(body[i].nombreCompeticion));
+			div.appendChild(document.createTextNode(body[i].nombreTipoCompeticion));
+
+			selectCompeticion.appendChild(option);
+			divTipoCompeticion.appendChild(div);
+		}
+	});
+}
 
 window.addEventListener("load", () => {
 	tbody = document.getElementById("cuerpo");
 
+	addCompeticionToSelect();
+/*
 	fetchTablaPuntaje().then( ( { body: row } ) => {
-		console.log(row[0]);
 		for (let i = 0; i < row.length; i++) {
 			insertRow(row[i]);
 		}
 	});
+	*/
 });
+
+document.getElementById('selectCompeticion').addEventListener("change", (e) => {
+	let nombreCompeticion = e.target.value;
+
+	const divsClassTipoCompeticion = document.getElementsByClassName('tipoCompeticion');
+
+	for(let i = 0; i < divsClassTipoCompeticion.length; i++) {
+		divsClassTipoCompeticion[i].style.display = "none";
+	}
+
+	document.getElementById(nombreCompeticion).style.display = "flex";
+
+	switch(nombreCompeticion) {
+		case 'Regular. Todos contra Todos':
+			break;
+	}
+})

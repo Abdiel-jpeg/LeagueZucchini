@@ -280,6 +280,22 @@ const allEvento = () => {
 	return evento.allEvento(conexion);
 }
 
+const getEventoPerCompeticion = ( { nombreCompeticion, limit, offset } ) => {
+	return evento.getEventoPerCompeticion(conexion, nombreCompeticion, limit, offset)
+}
+
+const addEvento = ( { nombreEvento, idEquipo1, idEquipo2, nombreCompeticion } ) => {
+	return evento.addEvento(conexion, nombreEvento, idEquipo1, idEquipo2, nombreCompeticion);
+}
+
+const delEvento = ( { nombreCompeticion } ) => {
+	return evento.delEvento(conexion, nombreCompeticion);
+}
+
+const updateEvento = ( query ) => {
+	return evento.updateEvento(conexion, query);
+}
+
 //--- CONTROLADOR COMPETICION PARTICIPANTES ---
 
 const competicionParticipantes = require('./competicionParticipantessql');
@@ -302,6 +318,24 @@ const competicionCombinadaParticipantes = require('./competicionCombinadaPartici
 
 const allCompeticionCombinadaParticipantes = () => {
 	return competicionCombinadaParticipantes.allCompeticionCombinadaParticipantes(conexion);
+}
+
+// CONTROLADOR COMPETICION ELIMINACION DIRECTA PARTICIPANTE
+
+const competicionEliminacionDirectaParticipante = require('./competicionEliminacionDirectaParticipantesql');
+
+const addCompeticionEliminacionDirectaParticipante = ( { 
+	idCompeticionEliminacionDirectaParticipante: idNivel,
+	idEquipo1, 
+	idEquipo2, 
+	idLinkTo, 
+	nombreCompeticion 
+} ) => {
+	return competicionEliminacionDirectaParticipante.addCompeticionEliminacionDirectaParticipante(conexion, idNivel, idEquipo1, idEquipo2, idLinkTo, nombreCompeticion);
+}
+
+const delCompeticionEliminacionDirectaParticipante = ( { nombreCompeticion } ) => {
+	return competicionEliminacionDirectaParticipante.delCompeticionEliminacionDirectaParticipante(conexion, nombreCompeticion);
 }
 
 //--------- CONTROLADOR TABLA PUNTAJE ----------
@@ -399,6 +433,10 @@ module.exports = {
 	},
 	evento: {
 		allEvento,
+		getEventoPerCompeticion,
+		addEvento,
+		delEvento,
+		updateEvento
 	},
 	competicionParticipantes: {
 		allCompeticionParticipantes,
@@ -407,6 +445,10 @@ module.exports = {
 	},
 	competicionCombinadaParticipantes: {
 		allCompeticionCombinadaParticipantes,
+	},
+	competicionEliminacionDirectaParticipante: {
+		addCompeticionEliminacionDirectaParticipante,
+		delCompeticionEliminacionDirectaParticipante
 	},
 	tablaPuntaje: {
 		allTablaPuntaje,
