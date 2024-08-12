@@ -42,3 +42,26 @@ body {
 		background-color: white;
 		color: black;
 }
+
+.relleno {
+	display: flex;
+	flex-grow: 1;
+	padding: 20px
+}
+
+.spacer { 
+	height: 600px;
+}
+
+footer {
+	background-color: #444;
+	color: #ccc;
+	text-align: center;
+	padding: 20px;
+}
+
+footer a {
+	color: #fff;
+}
+
+

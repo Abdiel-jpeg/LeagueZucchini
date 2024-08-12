@@ -35,5 +35,9 @@ router.get('/control-competiciones/', (req, res) => {
 	res.sendFile(path.join(__dirname, '../../public/html/controlCompeticiones.html'));
 })
 
+router.get('/about/', (req, res) => {
+	res.sendFile(path.join(__dirname, '../../public/html/about.html'))
+})
+
 module.exports = router;
 
