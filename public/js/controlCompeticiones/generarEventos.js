@@ -15,6 +15,7 @@ const fetchAddCompeticionEliminacionDirectaParticipante = async (subEvento, nomb
 		"idEquipo1": subEvento[1],
 		"idEquipo2": subEvento[2],
 		"idLinkTo": subEvento[3] == undefined ? "null" : subEvento[3],
+		"fase": subEvento[4],
 		"nombreCompeticion": nombreCompeticion
 	}
 
@@ -33,12 +34,14 @@ const fetchDelCompeticionEliminacionDirectaParticipante = async (nombreCompetici
 	return json;
 }
 
-const fetchAddEvento = async (nombreEvento, idEquipo1, idEquipo2, nombreCompeticion) => {
+const fetchAddEvento = async (nombreEvento, idCompeticionEliminacionDirectaParticipante = 0, idEquipo1, idEquipo2, nombreCompeticion, faseActual = null) => {
 	const query = {
 		"nombreEvento": nombreEvento,
+		"idCompeticionEliminacionDirectaParticipante" : idCompeticionEliminacionDirectaParticipante ? idCompeticionEliminacionDirectaParticipante : null, 
 		"idEquipo1": idEquipo1,
 		"idEquipo2": idEquipo2,
-		"nombreCompeticion": nombreCompeticion
+		"nombreCompeticion": nombreCompeticion,
+		"faseActual": faseActual
 	}
 
 	const response = await fetch('/api/evento/', getQueryParams('POST', query));
@@ -81,6 +84,8 @@ const eliminacionDirecta = async (body, nombreCompeticion) => {
 
 	let nivel = 0;
 
+	let profundidad = 0;
+
 	const asignEvents = (total, link = -1, parent) => {
 		let currentParent = nLink;
 		let storedNLink = nLink;
@@ -99,11 +104,13 @@ const eliminacionDirecta = async (body, nombreCompeticion) => {
 			nivel: nivel
 		}
 
+		profundidad++;
+
 		let subTotal1 = Math.floor(total / 2)
 		let subTotal2 = subTotal1 + (total % 2)
 
 		console.log(`Numero iteracion ${storedNLink}`);
-		console.log(link)
+		console.log(`Profundidad: ${profundidad}`);
 		console.log(`SubTotal 1: ${total == 2 ? body[nivel - 2].idEquipo : subTotal1}`);
 		console.log(`SubTotal 2: ${total == 2 || total == 3 ? body[nivel - 1].idEquipo : subTotal2}`)
 		console.log(`total en subequipos: ${total}`)
@@ -115,7 +122,8 @@ const eliminacionDirecta = async (body, nombreCompeticion) => {
 			nLink,
 			total == 2 ? body[nivel - 2].idEquipo : "null",
 			total == 2 || total == 3 ? body[nivel - 1].idEquipo : "null",
-			parent
+			parent,
+			profundidad
 		]
 
 		events.push(subEvent);
@@ -127,14 +135,21 @@ const eliminacionDirecta = async (body, nombreCompeticion) => {
 
 		if (subTotal1 == 1) {		
 			if (subTotal2 == 1) {
+				profundidad --;
+
 				return 0;
 			}
 			asignEvents(subTotal2, storedNLink, currentParent)
+
+			profundidad--;
+
 			return 0;
 		}
 
 		asignEvents(subTotal1, storedNLink, currentParent)
 		asignEvents(subTotal2, storedNLink, currentParent)
+
+		profundidad--;
 	}
 
 	asignEvents(total)
@@ -190,8 +205,11 @@ const generarEventosEliminacionDirecta = (elementos, nombreCompeticion) => {
 
 	for(let i = 0; i < elementos.length; i++) {
 		let nombreEvento;
+		let idCompeticionEliminacionDirectaParticipante = [i][0] + 1;
 		let idEquipo1 = elementos[i][1]
 		let idEquipo2 = elementos[i][2]
+		let nFase = elementos[i][4]
+		let faseActual;
 
 		nombreEvento = `${idEquipo1} vs ${idEquipo2}`;
 
@@ -199,7 +217,25 @@ const generarEventosEliminacionDirecta = (elementos, nombreCompeticion) => {
 			nombreEvento = '';
 		}
 
-		fetchAddEvento(nombreEvento, idEquipo1, idEquipo2, nombreCompeticion);
+		switch(nFase) {
+			case 1: faseActual='Finales';
+				break;
+			case 2: faseActual='Semifinales';
+				break;
+			case 3: faseActual='Cuartos de finales';
+				break;
+			default: faseActual=`Jornada de ${Math.pow(2, nFase)}`;
+				break
+		}
+
+		fetchAddEvento(
+			nombreEvento, 
+			idCompeticionEliminacionDirectaParticipante, 
+			idEquipo1, 
+			idEquipo2, 
+			nombreCompeticion, 
+			faseActual
+		);
 	}
 }
 

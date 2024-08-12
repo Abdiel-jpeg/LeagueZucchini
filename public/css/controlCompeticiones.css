@@ -53,3 +53,30 @@
 	display: flex;
 	align-items: center;
 }
+
+.tablaEquipo {
+	display: block;
+	max-width: 100%;
+	overflow-x: auto;
+}
+
+.container-tablas-equipo {
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+/*
+.tbodyEquipo {
+	display: flex;
+	flex-direction: row;
+}
+*/
+/*
+.tbodyEquipo tr {
+	display: block;
+	float: left
+}
+*/
+/*.tbodyEquipo th, td {
+	display: block;
+}*/

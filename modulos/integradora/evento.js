@@ -27,6 +27,7 @@ async function perCompeticion(req, res) {
 
 		respuesta.success(req, res, items, 200);
 	} catch(err) {
+		console.log(err)
 		respuesta.error(req, res, err, 500);
 	}
 }

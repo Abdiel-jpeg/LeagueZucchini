@@ -1,10 +1,25 @@
 
-const addCompeticionEliminacionDirectaParticipante = (conexion, idNivel, idEquipo1, idEquipo2, idLinkTo, nombreCompeticion) => {
-	const sql = `INSERT INTO competicionEliminacionDirectaParticipante (idCompeticionEliminacionDirectaParticipante, idEquipo1, idEquipo2, idLinkTo, idCompeticion) VALUES (${idNivel}, ${idEquipo1}, ${idEquipo2}, ${idLinkTo}, (SELECT idCompeticion FROM competicion WHERE nombreCompeticion='${nombreCompeticion}' LIMIT 1));`
+const addCompeticionEliminacionDirectaParticipante = (conexion, idNivel, idEquipo1, idEquipo2, idLinkTo, fase, nombreCompeticion) => {
+	const sql = `INSERT INTO competicionEliminacionDirectaParticipante (
+		idCompeticionEliminacionDirectaParticipante, 
+		idEquipo1, 
+		idEquipo2, 
+		idLinkTo,
+		fase,
+		idCompeticion
+		) VALUES (?, ?, ?, ?, ?, (SELECT idCompeticion FROM competicion WHERE nombreCompeticion=? LIMIT 1));`
 
+	let values = [
+		idNivel,
+		idEquipo1 == 'null' ? null : idEquipo1,
+		idEquipo2 == 'null' ? null : idEquipo2,
+		idLinkTo == 'null' ? null : idLinkTo,
+		fase, 
+		nombreCompeticion
+	]
 
 	return new Promise((resolve, reject) => {
-		conexion.query(sql, (error, result) => {
+		conexion.query(sql, values, (error, result) => {
 			return error ? reject(error) : resolve(result)
 		})
 	})

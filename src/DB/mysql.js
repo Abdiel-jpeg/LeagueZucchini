@@ -284,8 +284,8 @@ const getEventoPerCompeticion = ( { nombreCompeticion, limit, offset } ) => {
 	return evento.getEventoPerCompeticion(conexion, nombreCompeticion, limit, offset)
 }
 
-const addEvento = ( { nombreEvento, idEquipo1, idEquipo2, nombreCompeticion } ) => {
-	return evento.addEvento(conexion, nombreEvento, idEquipo1, idEquipo2, nombreCompeticion);
+const addEvento = ( { nombreEvento, idCompeticionEliminacionDirectaParticipante, idEquipo1, idEquipo2, faseActual, nombreCompeticion } ) => {
+	return evento.addEvento(conexion, nombreEvento, idCompeticionEliminacionDirectaParticipante, idEquipo1, idEquipo2, faseActual, nombreCompeticion);
 }
 
 const delEvento = ( { nombreCompeticion } ) => {
@@ -329,9 +329,10 @@ const addCompeticionEliminacionDirectaParticipante = ( {
 	idEquipo1, 
 	idEquipo2, 
 	idLinkTo, 
+	fase,
 	nombreCompeticion 
 } ) => {
-	return competicionEliminacionDirectaParticipante.addCompeticionEliminacionDirectaParticipante(conexion, idNivel, idEquipo1, idEquipo2, idLinkTo, nombreCompeticion);
+	return competicionEliminacionDirectaParticipante.addCompeticionEliminacionDirectaParticipante(conexion, idNivel, idEquipo1, idEquipo2, idLinkTo, fase, nombreCompeticion);
 }
 
 const delCompeticionEliminacionDirectaParticipante = ( { nombreCompeticion } ) => {
@@ -344,6 +345,14 @@ const tablaPuntaje = require('./tablaPuntajesql.js');
 
 const allTablaPuntaje = () => {
 	return tablaPuntaje.allTablaPuntaje(conexion);
+}
+
+const addTablaPuntaje = (query) => {
+	return tablaPuntaje.addTablaPuntaje(conexion, query);
+}
+
+const delTablaPuntaje = (query) => {
+	return tablaPuntaje.delTablaPuntaje(conexion, query)
 }
 
 //------------- CONTROLADOR USUARIO ------------
@@ -452,6 +461,8 @@ module.exports = {
 	},
 	tablaPuntaje: {
 		allTablaPuntaje,
+		addTablaPuntaje,
+		delTablaPuntaje
 	},
 	usuario: {
 		allUsuario,

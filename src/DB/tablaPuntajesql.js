@@ -8,6 +8,25 @@ const allTablaPuntaje = (conexion) => {
 	});
 }
 
+const addTablaPuntaje = (conexion, query) => {
+	const sql = `INSERT INTO tablaPuntaje (
+		posicion, 
+		idEquipoTablaPuntaje, 
+		puntos, 
+		partidosGanados, 
+		partidosPerdidos, 
+		partidosEmpatados, 
+		golesAFavor, 
+		golesEnContra, 
+		diferenciaGoles, 
+		idCompeticion
+		) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? ,?)`
+
+	let values = [
+		
+	]
+}
+
 module.exports = {
 	allTablaPuntaje,
 }

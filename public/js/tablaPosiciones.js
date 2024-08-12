@@ -1,5 +1,7 @@
 
 import { getParams } from "/js/fetchParams.js";
+import calcularPuntos from '/js/tablaPosiciones/calcularPuntos.js';
+import generarArbolBinario from '/js/tablaPosiciones/arbolBinario.js'
 
 let divTipoCompeticion;
 let tbody;
@@ -112,10 +114,20 @@ document.getElementById('selectCompeticion').addEventListener("change", (e) => {
 		divsClassTipoCompeticion[i].style.display = "none";
 	}
 
-	document.getElementById(nombreCompeticion).style.display = "flex";
+	let labelAVisible = document.getElementById(nombreCompeticion)
 
-	switch(nombreCompeticion) {
+	labelAVisible.style.display = "flex";
+
+	let tipoCompeticion = labelAVisible.innerHTML
+
+	switch(tipoCompeticion) {
 		case 'Regular. Todos contra Todos':
+		case "Regular. Ida y Vuelta":
+			calcularPuntos(nombreCompeticion);
+			break;
+		case "Eliminación Directa": 
+			generarArbolBinario(nombreCompeticion);
+
 			break;
 	}
 })
