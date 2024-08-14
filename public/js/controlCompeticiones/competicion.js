@@ -317,9 +317,36 @@ const formularioElemento = async (parent, isPopup, content) => {
 	seccionTipoCompeticion.appendChild(labelSelectTipoCompeticion);
 	seccionTipoCompeticion.appendChild(selectTipoCompeticion);
 
+	let p = document.createElement('p');
+
+	selectTipoCompeticion.addEventListener("change", (e) => {
+		switch(e.target.value) {
+			case "Eliminación Directa":
+				p.innerText = `
+					Nota: En eliminación directa los equipos participantes no podrán quedar empatados y los penales finales serán obligatorios hasta que uno gane. 
+					Las competiciones de tipo eliminacion directa no se evaluaran con tabla de puntos.`
+				break;
+
+			case "Regular. Ida y Vuelta":
+				p.innerText = `
+					Nota: Los equipos, a diferencia de Todos contra Todos, competiran al menos dos veces entre si. 
+					Formando lo que se llama "Casa" y "Visita"`
+
+				break;
+			case `Regular. Todos contra Todos`:
+				p.innerText= `Nota: Los equipos en Todos contra Todos competiran por al menos una vez entre si.
+					Al final se evaluará el ganador en base el quién obtuvo más puntos`;
+				break;
+		}
+	});
+
+	let div = document.createElement('div');
+	div.appendChild(p);
+
 	form.appendChild(seccionNombreCompeticion)
 	form.appendChild(seccionDescripcionCompeticion)
 	form.appendChild(seccionTipoCompeticion);
+	form.appendChild(div);
 	form.appendChild(botonRegistrar);
 
 	parent.appendChild(form);

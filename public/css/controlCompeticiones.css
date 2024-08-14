@@ -4,6 +4,8 @@
 	flex-direction: row-reverse;
 	justify-content: space-around;
 	margin-top: 15px;
+	flex-wrap: wrap-reverse;
+	gap: 50px;
 }
 
 .moduloAsignarEquipos > div {
@@ -17,6 +19,22 @@
 
 .moduloEvento > div {
 	padding: 25px;
+}
+
+.opcion {	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#selectOpcion {	
+	appearance: none;
+	width: 100%;
+	background-color: #fff;
+	border-radius: 15px;
+	text-align: center;
+	font-size: 1.2rem;
 }
 
 .seleccionInstitucion {
@@ -80,3 +98,7 @@
 /*.tbodyEquipo th, td {
 	display: block;
 }*/
+
+table th {
+	font-size: 1rem;
+}

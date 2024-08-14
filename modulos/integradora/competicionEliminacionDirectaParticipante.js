@@ -6,8 +6,20 @@ const { competicionEliminacionDirectaParticipante: controlador } = require('../.
 
 const router = express.Router();
 
+router.get('/:nombreCompeticion', perCompeticion);
 router.post('/', add);
 router.delete('/', del)
+
+async function perCompeticion(req, res) {
+	try {
+		const response = await controlador.perCompeticionEliminacionDirectaParticipante(req.params);
+
+		respuesta.success(req, res, response, 200);
+	} catch(err){
+		console.log(err);
+		respuesta.error(req, res, err, 500);
+	}
+}
 
 async function add(req, res) {
 	try {

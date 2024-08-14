@@ -90,6 +90,8 @@
             margin-top: 10px;
         }
     </style>
+    <script type="module" src="/js/login.js">
+    </script>
 </head>
 <body>
     <div class="login-container">
@@ -103,22 +105,5 @@
         </form>
         <p class="admin-message">SOLO ADMINISTRADOR PUEDE INICIAR SESIÓN</p>
     </div>
-
-    <script type="module" src="/js/login.js">
-        /*
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-            // Validación de administrador (simulada)
-            if (username === 'admin' && password === 'admin123') {
-                alert('Inicio de sesión exitoso como administrador');
-                window.location.href = 'index.html'; // Redirigir a la página principal
-            } else {
-                alert('Solo el administrador puede iniciar sesión');
-            }
-        });
-        */
-    </script>
 </body>
 </html>

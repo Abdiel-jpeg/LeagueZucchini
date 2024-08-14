@@ -4,6 +4,7 @@ import insertModuloCiudad from "/js/registro/registroCiudad.js";
 import insertModuloInstitucion from "/js/registro/registroInstitucion.js";
 import insertModuloEquipo from "/js/registro/registroEquipo.js";
 
+let bg;
 let moduloRegion;
 let moduloCiudad;
 let moduloInstitucion;
@@ -25,9 +26,11 @@ const changeRegistro = (target) => {
 
 		case "Participante": moduloParticipante.style.display = 'flex';
 	}
+
 }
 
 window.addEventListener("load", () => {
+	bg = document.getElementsByClassName('bg')[0];
 	moduloRegion = document.getElementsByClassName("moduloRegion")[0];
 	moduloCiudad = document.getElementsByClassName('moduloCiudad')[0];
 	moduloInstitucion = document.getElementsByClassName('moduloInstitucion')[0];
@@ -45,6 +48,9 @@ document.getElementById("cerrar").addEventListener("click", (e) => {
 
 document.getElementById('registrar').addEventListener("change", (e) => {
 	e.preventDefault();
+
+	bg.style.filter = 'blur(5px)';
+
 	moduloRegion.innerHTML = "";
 	moduloCiudad.innerHTML = "";
 	moduloInstitucion.innerHTML = "";

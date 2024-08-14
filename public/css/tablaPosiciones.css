@@ -1,5 +1,4 @@
 body {
-		background-color: #f0f0f0; /* Fondo formal y elegante */
 		margin: 0;
 		padding: 0;
 		font-family: 'Calibri', sans-serif;
@@ -7,11 +6,46 @@ body {
 		text-align: center;
 }
 
+.bg {
+	background-image: url('/pictures/aero.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: bottom;
+	background-position: fixed;
+	/*filter: blur(5px);*/
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
+
+.content {
+	z-index: 2;
+}
+
 .title {
 		text-align: center;
 		color: #333;
 		margin-top: 20px;
 		font-size: 2.5em;
+}
+
+.select_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#selectCompeticion {
+	appearance: none;
+	width: 100%;
+	background-color: #fff;
+	border-radius: 15px;
+	text-align: center;
+	font-size: 1.2rem;
 }
 
 #tipoCompeticion {
@@ -26,7 +60,13 @@ table {
 		margin: 20px auto;
 		border-radius: 10px; /* Marcos redondos */
 		overflow: hidden; /* Evita que los bordes redondeados corten el contenido */
-		box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Sombra suave para un efecto moderno */
+		box-shadow: 0 0 20px rgba(0, 0, 0, 0.6); /* Sombra suave para un efecto moderno */
+}
+
+thead th {
+	background-color: #767;
+	color: white;
+	font-weight: bold;
 }
 
 th, td {
@@ -40,10 +80,45 @@ th {
 		color: #555;
 }
 
-tr:nth-child(even) {
+tbody tr:nth-child(even) {
 		background-color: #f9f9f9; /* Fondo alternado para filas */
 }
 
 tr:hover {
 		background-color: #f1f1f1; /* Color de fondo al pasar el cursor */
+}
+
+#treeContainer {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-direction: column;
+}
+
+#treeContainer ul {
+	display: flex;
+	justify-content: center;
+	position: relative
+}
+
+#treeContainer li {
+	list-style-type: none;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+}
+
+.contenedor_equipo {
+	display: flex;
+	gap: 15px;
+	border: 2px solid #333;
+	border-radius: 5px;
+	width: 200px;
+	margin: 20px;
+	height: 50px;
+}
+
+#ganador {
+	font-weight: bold;
 }

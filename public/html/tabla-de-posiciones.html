@@ -7,31 +7,22 @@
     <link rel="stylesheet" href="../css/tablaPosiciones.css">
     <script type="module" src='/js/tablaPosiciones.js'></script>
 </head>
-<body>
-    <h1 class="title">Tabla de Posiciones - UEFA UTCJ LEAGUE</h1>
-    <div>
-        <select id='selectCompeticion'>
-        </select>
-        <div id='tipoCompeticion'>
+<body id='body'>
+    <div class='bg'></div>
+    <div class=content>
+        <h1 class="title">Tabla de Posiciones - UEFA UTCJ LEAGUE</h1>
+        <div class='select_container'>
+            <select id='selectCompeticion'>
+            </select>
+            <div id='tipoCompeticion'>
+            </div>
+        </div>
+        <div id='tableContainer'>
+        </div>
+        <div id='treeContainer'>
+            <ul id='treeRoot'>
+            </ul>
         </div>
     </div>
-    <table>
-        <thead>
-            <tr>
-                <th>Posición</th>
-                <th>Equipo</th>
-                <th>Grupo</th>
-                <th>PG</th>
-                <th>PE</th>
-                <th>PP</th>
-                <th>GF</th>
-                <th>GC</th>
-                <th>Dif</th>
-                <th>Puntos</th>
-            </tr>
-        </thead>
-        <tbody id="cuerpo">
-        </tbody>
-    </table>
 </body>
 </html>

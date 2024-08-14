@@ -324,6 +324,10 @@ const allCompeticionCombinadaParticipantes = () => {
 
 const competicionEliminacionDirectaParticipante = require('./competicionEliminacionDirectaParticipantesql');
 
+const perCompeticionEliminacionDirectaParticipante = ( params ) => {
+	return competicionEliminacionDirectaParticipante.perCompeticionEliminacionDirectaParticipante(conexion, params);
+}
+
 const addCompeticionEliminacionDirectaParticipante = ( { 
 	idCompeticionEliminacionDirectaParticipante: idNivel,
 	idEquipo1, 
@@ -456,6 +460,7 @@ module.exports = {
 		allCompeticionCombinadaParticipantes,
 	},
 	competicionEliminacionDirectaParticipante: {
+		perCompeticionEliminacionDirectaParticipante,
 		addCompeticionEliminacionDirectaParticipante,
 		delCompeticionEliminacionDirectaParticipante
 	},

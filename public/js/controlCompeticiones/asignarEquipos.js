@@ -128,6 +128,17 @@ const insertModuloAsignarEquipos = async () => {
 
 
 	const addValuesSelectCiudad = async (nombreRegion) => {
+	let optionDefaultCiudad = document.createElement('option');
+	
+		optionDefaultCiudad.setAttribute('value', "")
+		optionDefaultCiudad.setAttribute('selected', 'selected')
+		optionDefaultCiudad.setAttribute('hidden', 'hidden')
+		optionDefaultCiudad.setAttribute('disabled', 'disabled')
+
+		optionDefaultCiudad.appendChild(document.createTextNode('Seleccionar'));
+
+		selectCiudad.appendChild(optionDefaultCiudad);
+
 		const { body: ciudades } = await fetchCiudad(nombreRegion);
 
 		for(let i = 0; i < ciudades.length; i++) {
@@ -141,6 +152,17 @@ const insertModuloAsignarEquipos = async () => {
 	}
 
 	const addValuesSelectInstitucion = async (nombreCiudad) => {
+		let optionDefaultInstitucion = document.createElement('option');
+	
+		optionDefaultInstitucion.setAttribute('value', "")
+		optionDefaultInstitucion.setAttribute('selected', 'selected')
+		optionDefaultInstitucion.setAttribute('hidden', 'hidden')
+		optionDefaultInstitucion.setAttribute('disabled', 'disabled')
+
+		optionDefaultInstitucion.appendChild(document.createTextNode('Seleccionar'));
+
+		selectInstitucion.appendChild(optionDefaultInstitucion);
+
 		const { body: instituciones } = await fetchInstitucion(nombreCiudad);
 
 		for(let i = 0; i < instituciones.length; i++) {
@@ -194,6 +216,8 @@ const insertModuloAsignarEquipos = async () => {
 		tbodyEquipos.appendChild(addCabeceraTabla());
 
 		const { body: equipos } = await fetchEquipo(selectInstitucion.value);
+
+		console.log(equipos)
 
 		for(let i = 0; i < equipos.length; i++) {
 			tbodyEquipos.appendChild(addRowsTabla(equipos[i]));

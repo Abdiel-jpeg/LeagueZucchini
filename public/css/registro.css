@@ -3,6 +3,37 @@
 
 }
 
+.bg {
+	background-image: url('/pictures/aero.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: bottom;
+	background-position: fixed;
+	filter: blur(0px);
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
+
+.registrar_container {	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#registrar {
+	appearance: none;
+	width: 100%;
+	background-color: #fff;
+	border-radius: 15px;
+	text-align: center;
+	font-size: 1.2rem;
+}
+
 .moduloRegion,
 .moduloCiudad,
 .moduloInstitucion,
@@ -61,13 +92,11 @@
 	width: 75%;
 	display: flex;
 	flex-direction: column;
-	align-items: stretch;/*
-	background: red;
-	border: 2px solid black;*/
 }
 
 table {
 	border-collapse: collapse;
+	border-radius: 15px;
 }
 
 table td,
@@ -97,6 +126,10 @@ table th {
 
 .row:nth-child(even) {
 	background: #eee;
+}
+
+.row:nth-child(odd) {
+	background: #fff;
 }
 
 .row:hover {

@@ -11,10 +11,12 @@ body {
 }
 
 .container {
-	width: 33%;
+	width: 850px;
 	background-color: #222;
 	border-radius: 15px;
 	box-shadow: 5px 5px 5px black;
+	margin-top: 200px;
+	margin-bottom: 300px
 }
 
 .participante_container {
@@ -39,9 +41,12 @@ img {
 
 h1, h3, h4 {
 	color: #fef;
+	width: 100%;
+	text-align: center;
 }
 
 p {
 	text-align: center;
 	color: #ccc;
 }
+

@@ -54,7 +54,7 @@ const loginFetch = async () => {
 		contraseniaUsuario: password,
 	}
 
-	const JSON = await fetch('http://localhost:4000/api/usuarioTest', getQueryParams('POST', query));
+	const JSON = await fetch('/api/usuarioTest', getQueryParams('POST', query));
 
 	const response = await JSON.json();
 
@@ -65,17 +65,15 @@ const loginFetch = async () => {
 	} else {
 		window.location.href = "/admin/";
 	}
-
-	console.log(response);
 }
 
 const signUp = () => {
 	console.log(localStorage);
 }
 
-document.getElementById("login").addEventListener("click", (e) => {
+document.getElementById("login").addEventListener("click", async (e) => {
 	e.preventDefault();
-	loginFetch();
+	await loginFetch();
 });
 
 document.getElementById("sign up").addEventListener("click", (e) => {
